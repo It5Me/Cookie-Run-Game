@@ -20,6 +20,12 @@ void Player::DRAW(RenderWindow* window)
 	window->draw(this->body);
 }
 
+Vector2f Player::getposition()
+{
+	
+	return body.getPosition()+gethalfsize();
+}
+
 void Player::update(int row)
 {
 	this->totaltime += clock.restart().asSeconds();

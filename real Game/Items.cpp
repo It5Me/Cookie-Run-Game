@@ -20,6 +20,16 @@ void Items::DRAW(RenderWindow* window)
 	window->draw(body);
 }
 
+void Items::hide()
+{
+	this->body.setPosition(-200.0f, -200.0f);
+}
+
+Vector2f Items::getposition()
+{
+	return body.getPosition();
+}
+
 void Items::update()
 {
 	totaltime += clock.restart().asSeconds();
