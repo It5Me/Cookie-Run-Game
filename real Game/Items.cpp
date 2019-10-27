@@ -15,7 +15,7 @@ Items::Items(Texture texture, int score,int countx, Vector2f pos)
 
 void Items::DRAW(RenderWindow* window)
 {
-	this->body.move(-3.0f, 0.0f);
+	this->body.move(-5.0f, 0.0f);
 	update();
 	window->draw(body);
 }
@@ -33,10 +33,10 @@ Vector2f Items::getposition()
 void Items::update()
 {
 	totaltime += clock.restart().asSeconds();
-	if (totaltime >= 0.1) {
+	if (totaltime >= 0.3) {
 		x++;
 		totaltime = 0;
-		if (x > countx) {
+		if (x >= countx) {
 			x = 0;
 
 		}

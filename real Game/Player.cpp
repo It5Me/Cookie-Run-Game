@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-	this->bodyTexture.loadFromFile("Texture\\player\\playerlong-01.png");
+	this->bodyTexture.loadFromFile("Texture\\player\\player-01.png");
 	this->body.setTexture(this->bodyTexture);
 	this->body.setPosition(200.0f, 490.0f);
 	this->rec.top = 0;
@@ -29,7 +29,7 @@ Vector2f Player::getposition()
 void Player::update(int row)
 {
 	this->totaltime += clock.restart().asSeconds();
-	if (totaltime > 0.08f) {
+	if (totaltime > 0.03f) {
 		totaltime = 0;
 		this->count++;
 		if (count > 9) {
@@ -56,6 +56,7 @@ void Player::control()
 			this->A = 12;
 			this->statejump = 1;
 			this->jumphight = true;
+			this->stateanimation = 5;
 		}
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S) && stateanimation!=2) {

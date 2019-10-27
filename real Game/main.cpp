@@ -3,6 +3,7 @@
 #include"Map.h"
 #include"Player.h"
 #include"Items.h"
+#include"Menu.h"
 void collis(Player* P, Items* I)
 {
 	if (abs(P->getposition().x - I->getposition().x) <= P->gethalfsize().x + I->gethalfsize().x/2
@@ -19,14 +20,18 @@ int main() {
 	MAP map;
 	Player player1;
 	Texture ITEM1;
-	ITEM1.loadFromFile("Texture\\item\\item1.png");
+	Menu menu;
+	ITEM1.loadFromFile("Texture\\item\\objectBearEx-01.png");
 	//cout << "EIEI" << endl;
 	vector<Items> item1;
 	Items* temp;
-	for (int i = 0; i < 10; i++)
+	float j = 20;
+	for (int i = 0; i < 40; i++)
 	{
-		temp = new Items(ITEM1, 200, 9, Vector2f(1000.0 + (i*500), 500.0f));
+		//cout << 590.0 - abs(sin(j) * 100) << endl;
+		temp = new Items(ITEM1, 200, 4, Vector2f(1000.0 + (i*100), 590.0-abs(sin(j/2)*250))); //////////////////////////////////
 		item1.push_back(*temp);
+		j = (j < 0 ? 0 : j -0.5);
 		//cout << item1[i].getposition().x << endl;
 	}
 
@@ -45,16 +50,17 @@ int main() {
 		}
 		
 		window.clear();
-		map.DRAW(&window);
-		player1.DRAW(&window);
-		for (int i = 0; i < 10; i++)
+		//map.DRAW(&window);
+		//player1.DRAW(&window);
+		menu.DRAW(&window);
+		/*for (int i = 0; i < 40; i++)
 		{
 			item1[i].DRAW(&window);
 			//cout << player1.getposition().x << " " << player1.getposition().y << endl;
 			//cout << item1[i].gethalfsize().x/2 << " " << item1[i].gethalfsize().y/2 << endl;
 			collis(&player1,&item1[i]);
 			
-		}
+		}*/
 		//item2.DRAW(&window);
 		window.display();
 	}

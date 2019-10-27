@@ -21,7 +21,7 @@ void MAP::DRAW(RenderWindow* window)
 
 void MAP::MOVE()
 {
-	this->floor1.move(-3.0f, 0.0f);
+	this->floor1.move(-5.0f, 0.0f);
 	this->map1.move(-0.8f, 0.0f);
 }
 
