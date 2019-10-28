@@ -2,7 +2,7 @@
 
 Menu::Menu()
 {
-	this->loadfile();
+	//this->loadfile();
 	this->texture[0].loadFromFile("Texture\\menu\\bgfront-01.jpg");
 	this->texture[1].loadFromFile("Texture\\menu\\bg_highscore.png");
 	this->texture[2].loadFromFile("Texture\\menu\\showname.png");
@@ -18,8 +18,8 @@ Menu::Menu()
 	this->texture[12].loadFromFile("Texture\\menu\\btn_playerright_normal.png");
 	this->texture[13].loadFromFile("Texture\\menu\\player.png");
 	this->texture[14].loadFromFile("Texture\\menu\\animal.png");
-	this->texture_animal[0].loadFromFile("Texture\\menu\\animalele-01.png");
-	this->texture_animal[1].loadFromFile("Texture\\menu\\animalele-01.png");
+	this->texture_animal[0].loadFromFile("Texture\\menu\\animal1.png");
+	this->texture_animal[1].loadFromFile("Texture\\menu\\animal2.png");
 	this->texture_player[0].loadFromFile("Texture\\player\\playerwomanall-01.png");
 	this->texture_player[1].loadFromFile("Texture\\player\\player-01.png");
 	this->spri_bg.setTexture(this->texture[0]);
@@ -175,7 +175,7 @@ void Menu::update()
 {
 	this->totaltime += this->clock.restart().asSeconds();
 	this->totaltime1 += this->clock1.restart().asSeconds();
-	if (this->totaltime >= 0.1) {
+	if (this->totaltime >= 0.2) {
 		this->totaltime = 0;
 		x++;
 		if (x == 4) {
