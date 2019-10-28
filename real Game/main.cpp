@@ -21,7 +21,7 @@ int main() {
 	Player player1;
 	Texture ITEM1;
 	Menu menu;
-	ITEM1.loadFromFile("Texture\\item\\objectBearEx-01.png");
+	ITEM1.loadFromFile("Texture\\item\\testbear-01.png");
 	//cout << "EIEI" << endl;
 	vector<Items> item1;
 	Items* temp;
@@ -50,18 +50,26 @@ int main() {
 		}
 		
 		window.clear();
-		//map.DRAW(&window);
-		//player1.DRAW(&window);
-		menu.DRAW(&window);
-		/*for (int i = 0; i < 40; i++)
+		if (menu.check()) {
+			map.DRAW(&window);
+			player1.DRAW(&window);
+			for (int i = 0; i < 40; i++)
 		{
 			item1[i].DRAW(&window);
 			//cout << player1.getposition().x << " " << player1.getposition().y << endl;
 			//cout << item1[i].gethalfsize().x/2 << " " << item1[i].gethalfsize().y/2 << endl;
 			collis(&player1,&item1[i]);
-			
-		}*/
-		//item2.DRAW(&window);
+
+		}
+
+		}
+		else {
+			menu.DRAW(&window);
+		}
+
+		
+
+		//item2.DRAW(&window);*/
 		window.display();
 	}
 

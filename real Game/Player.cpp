@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-	this->bodyTexture.loadFromFile("Texture\\player\\player-01.png");
+	this->bodyTexture.loadFromFile("Texture\\player\\playerwomanall-01.png");
 	this->body.setTexture(this->bodyTexture);
 	this->body.setPosition(200.0f, 490.0f);
 	this->rec.top = 0;
@@ -29,13 +29,27 @@ Vector2f Player::getposition()
 void Player::update(int row)
 {
 	this->totaltime += clock.restart().asSeconds();
-	if (totaltime > 0.03f) {
-		totaltime = 0;
-		this->count++;
-		if (count > 9) {
-			count = 0;
+	if (row == 5) {
+		if (totaltime > 0.036f) {
+			totaltime = 0;
+			this->count++;
+			if (count > 9) {
+				count = 0;
+			}
 		}
+		
 	}
+	else {
+		if (totaltime > 0.03f) {
+			totaltime = 0;
+			this->count++;
+			if (count > 9) {
+				count = 0;
+			}
+		}
+
+	}
+	
 	this->rec.left = rec.width * count;
 	this->rec.top = rec.height * row;
 	this->body.setTextureRect(rec);
