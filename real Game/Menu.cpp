@@ -20,6 +20,8 @@ Menu::Menu()
 	this->texture[14].loadFromFile("Texture\\menu\\animal.png");
 	this->texture_animal[0].loadFromFile("Texture\\menu\\animal1.png");
 	this->texture_animal[1].loadFromFile("Texture\\menu\\animal2.png");
+	this->texture_animal[2].loadFromFile("Texture\\menu\\animal3.png");
+	this->texture_animal[3].loadFromFile("Texture\\menu\\animal4.png");
 	this->texture_player[0].loadFromFile("Texture\\player\\playerwomanall-01.png");
 	this->texture_player[1].loadFromFile("Texture\\player\\player-01.png");
 	this->spri_bg.setTexture(this->texture[0]);
@@ -88,7 +90,7 @@ void Menu::DRAW(RenderWindow* window)
 	window->draw(this->spri_animal);
 	window->draw(this->showanimal);
 	window->draw(this->showplayer);
-
+	
 
 	for (int i = 0; i < 5; i++) {
 		window->draw(this->text[i]);
@@ -140,7 +142,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 				break;//start
 			case 1:index_animal = (index_animal > 0 ? index_animal - 1 : index_animal);
 				break;//animalleft
-			case 2:index_animal = (index_animal < 1 ? index_animal + 1 : index_animal);
+			case 2:index_animal = (index_animal < 3 ? index_animal + 1 : index_animal);
 				break;//animalright
 			case 3:index_player = (index_player > 0 ? index_player -1  : index_player);
 				break;//playerleft
@@ -149,6 +151,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 			}
 			this->showplayer.setTexture(this->texture_player[index_player]);
 			this->showanimal.setTexture(this->texture_animal[index_animal]);
+			
 			if (index_player == 1) {
 				this->showplayer.setScale(1.8f, 1.8f);
 				this->showplayer.setPosition(1084.3f, 207.0f);
@@ -173,6 +176,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 
 void Menu::update()
 {
+	cout << "index" << index_animal << endl;
 	this->totaltime += this->clock.restart().asSeconds();
 	this->totaltime1 += this->clock1.restart().asSeconds();
 	if (this->totaltime >= 0.2) {

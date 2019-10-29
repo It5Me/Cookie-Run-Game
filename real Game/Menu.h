@@ -10,7 +10,7 @@ public:
 
 
 private:
-	Texture texture_animal[2];
+	Texture texture_animal[4];
 	Texture texture_player[2];
 	Sprite  showplayer;
 	Sprite  showanimal;
