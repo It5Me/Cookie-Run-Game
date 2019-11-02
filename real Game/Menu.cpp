@@ -23,7 +23,7 @@ Menu::Menu()
 	this->texture_animal[2].loadFromFile("Texture\\menu\\animal3.png");
 	this->texture_animal[3].loadFromFile("Texture\\menu\\animal4.png");
 	this->texture_player[0].loadFromFile("Texture\\player\\playerwomanall-01.png");
-	this->texture_player[1].loadFromFile("Texture\\player\\player-01.png");
+	this->texture_player[1].loadFromFile("Texture\\player\\manplayer.png");
 	this->spri_bg.setTexture(this->texture[0]);
 	this->spri_highscore.setTexture(this->texture[1]);
 	this->spri_showname.setTexture(this->texture[2]);
@@ -121,6 +121,16 @@ bool Menu::check()
 	return this->start;
 }
 
+int Menu::select_player()
+{
+	return index_player;
+}
+
+int Menu::select_animal()
+{
+	return this->index_animal;
+}
+
 void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, bool* p,int index)
 {
 	if (Mouse::getPosition(*window).x >= spri->getPosition().x &&
@@ -176,7 +186,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 
 void Menu::update()
 {
-	cout << "index" << index_animal << endl;
+	//cout << "index" << index_animal << endl;
 	this->totaltime += this->clock.restart().asSeconds();
 	this->totaltime1 += this->clock1.restart().asSeconds();
 	if (this->totaltime >= 0.2) {

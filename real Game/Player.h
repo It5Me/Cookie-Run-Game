@@ -5,14 +5,15 @@ public:
 	Player();
 	void DRAW(RenderWindow* window);
 	Vector2f getposition();
-	Vector2f gethalfsize() { return Vector2f(this->bodyTexture.getSize().x /10 / 4.0f, this->bodyTexture.getSize().y /10/ 4.0f); };
-
-
+	Vector2f gethalfsize();
+	void selectcharacter(int index);
 
 private:
 
 	Sprite body;
-	Texture bodyTexture;
+	Texture manTexture;
+	Texture womenTexture;
+	int select=0;
 	void update(int row);
 	Clock clock;
 	IntRect rec;

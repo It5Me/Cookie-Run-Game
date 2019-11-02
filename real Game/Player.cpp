@@ -2,13 +2,14 @@
 
 Player::Player()
 {
-	this->bodyTexture.loadFromFile("Texture\\player\\playerwomanall-01.png");
-	this->body.setTexture(this->bodyTexture);
+	this->womenTexture.loadFromFile("Texture\\player\\playerwomanall-01.png");
+	this->manTexture.loadFromFile("Texture\\player\\manplayer.png");
+	//this->body.setTexture(this->bodyTexture);
 	this->body.setPosition(200.0f, 490.0f);
 	this->rec.top = 0;
 	this->rec.left = 0;
-	this->rec.width = bodyTexture.getSize().x/10;
-	this->rec.height = bodyTexture.getSize().y / 10;
+	this->rec.width = manTexture.getSize().x/10;
+	this->rec.height = manTexture.getSize().y / 10;
 	this->body.setScale(0.9f, 1.0f);
 }
 
@@ -24,6 +25,32 @@ Vector2f Player::getposition()
 {
 	
 	return body.getPosition()+gethalfsize();
+}
+
+Vector2f Player::gethalfsize()
+{
+	 //return Vector2f(this->bodyTexture.getSize().x / 10 / 4.0f, this->bodyTexture.getSize().y / 10 / 4.0f); };
+
+	if (this->select == 1) {
+		return Vector2f(this->manTexture.getSize().x / 10 / 4.0f, this->manTexture.getSize().y / 10 / 4.0f);
+	}
+	else
+	{
+		return Vector2f(this->womenTexture.getSize().x / 10 / 4.0f, this->womenTexture.getSize().y / 10 / 4.0f);
+
+	}
+
+}
+	
+void Player::selectcharacter(int index)
+{
+	this->select = index;
+	if (this->select == 1) {
+		this->body.setTexture(this->manTexture);
+	}
+	else {
+		this->body.setTexture(this->womenTexture);
+	}
 }
 
 void Player::update(int row)
@@ -61,19 +88,19 @@ void Player::control()
 		jumpdelta += clockjump.restart().asSeconds();
 		if (this->statejump == 0) {
 			this->statejump = 1;
-			cout << "jump" << endl;
+			//cout << "jump" << endl;
 			jumpdelta = 0;
 			this->stateanimation = 2;
 		}
 		else if ((this->statejump == 1 || this->statejump == 2) && this->jumphight==false && jumpdelta>0.3) {
-			cout << A << endl;
+			//cout << A << endl;
 			this->A = 12;
 			this->statejump = 1;
 			this->jumphight = true;
 			this->stateanimation = 5;
 		}
 	}
-	else if (Keyboard::isKeyPressed(Keyboard::S) && stateanimation!=2) {
+	else if (Keyboard::isKeyPressed(Keyboard::S) && stateanimation!=2 && stateanimation!=5) {
 		this->stateanimation = 3;
 		this->body.setScale(0.7f,0.8f);
 		this->body.setPosition(200.0f, 530.0f);

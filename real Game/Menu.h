@@ -7,6 +7,8 @@ public:
 	void DRAW(RenderWindow* window);
 	void loadfile();
 	bool check();
+	int select_player();
+	int select_animal();
 
 
 private:
@@ -34,7 +36,7 @@ private:
 	int x=0, x1=0;
 	int index_animal = 0;
 	int index_player = 0;
-	bool start = false; //0
+	bool start = true; //0
 
 
 

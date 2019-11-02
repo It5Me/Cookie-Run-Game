@@ -2,8 +2,10 @@
 
 MAP::MAP()
 {
-	this->map1Texture.loadFromFile("Texture\\map1\\firemap.jpg");
-	this->floor1Texture.loadFromFile("Texture\\map1\\firefloor.png");
+	//this->map1Texture.loadFromFile("Texture\\map1\\firemap.jpg");
+	//this->floor1Texture.loadFromFile("Texture\\map1\\firefloor.png");
+	this->map1Texture.loadFromFile("Texture\\map1\\mappppppppppppp-01.jpg");
+	this->floor1Texture.loadFromFile("Texture\\map1\\flooriceee-01.png");
 	this->floor1.setTexture(floor1Texture);
 	this->map1.setTexture(map1Texture);
 	this->floor1Texture.setRepeated(true);
@@ -18,6 +20,12 @@ void MAP::DRAW(RenderWindow* window)
 	window->draw(floor1);
 
 }
+
+bool MAP::checkSpwan()
+{
+	return (int(this->floor1.getPosition().x)%200)==0;
+}
+
 
 void MAP::MOVE()
 {

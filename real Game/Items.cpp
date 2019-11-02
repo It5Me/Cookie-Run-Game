@@ -1,7 +1,8 @@
 #include "Items.h"
 
-Items::Items(Texture texture, int score,int countx, Vector2f pos)
+Items::Items(Texture texture, int score,int countx, Vector2f pos, int type)
 {
+	this->type = type;
 	this->Texturebody = texture;
 	this->score = score;
 	this->countx = countx;
@@ -11,6 +12,7 @@ Items::Items(Texture texture, int score,int countx, Vector2f pos)
 	this->rec.left = 0;
 	this->rec.width = this->Texturebody.getSize().x / countx;
 	this->rec.height = this->Texturebody.getSize().y;
+	this->body.setOrigin(this->rec.width/2, this->rec.height/2);
 }
 
 void Items::DRAW(RenderWindow* window)
@@ -23,6 +25,16 @@ void Items::DRAW(RenderWindow* window)
 void Items::hide()
 {
 	this->body.setPosition(-200.0f, -200.0f);
+}
+
+int Items::gettype()
+{
+	return this->type;
+}
+
+int Items::getscore()
+{
+	return this->score;
 }
 
 Vector2f Items::getposition()
