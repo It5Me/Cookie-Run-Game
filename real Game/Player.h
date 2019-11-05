@@ -7,9 +7,11 @@ public:
 	Vector2f getposition();
 	Vector2f gethalfsize();
 	void selectcharacter(int index);
-
+	void setBig();
+	void getposplayer(float *Y);
+	void checkdie(bool die);
 private:
-
+	float* y;
 	Sprite body;
 	Texture manTexture;
 	Texture womenTexture;

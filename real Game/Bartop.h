@@ -20,6 +20,8 @@ private:
 	Sprite spri_blood;
 	Texture texture_heart;
 	Sprite spri_heart;
+	Texture texture_BIG;
+	Sprite spri_BIG;
 	IntRect rect;
 	bool* bool_immortal;
 };

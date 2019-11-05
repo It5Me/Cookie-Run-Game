@@ -17,7 +17,7 @@ Items::Items(Texture texture, int score,int countx, Vector2f pos, int type)
 
 void Items::DRAW(RenderWindow* window)
 {
-	this->body.move(-5.0f, 0.0f);
+	this->body.move(-6.50f, 0.0f);
 	update();
 	window->draw(body);
 }

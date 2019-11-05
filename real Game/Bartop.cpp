@@ -45,6 +45,7 @@ Bartop::Bartop()
 	this->spri_immortal[5].setPosition(445, 30); // T
 	this->spri_immortal[6].setPosition(486, 30); // A
  	this->spri_immortal[7].setPosition(486+60, 30); // L
+	this->spri_BIG.setPosition(300, 400);
 }
 
 void Bartop::DRAW(RenderWindow* window)
@@ -54,6 +55,7 @@ void Bartop::DRAW(RenderWindow* window)
 	window->draw(this->spri_blood);
 	window->draw(this->spri_heart);
 	window->draw(this->spri_BGimmortal);
+	window->draw(this->spri_BIG);
 	for (int i = 0; i < 8; i++) {
 		if (this->bool_immortal[i] == true) {
 			window->draw(this->spri_immortal[i]);
@@ -84,3 +86,4 @@ void Bartop::drawscore(unsigned long* P)
 	this->text_score.setString(temp);
 
 }
+

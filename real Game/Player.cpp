@@ -5,16 +5,19 @@ Player::Player()
 	this->womenTexture.loadFromFile("Texture\\player\\playerwomanall-01.png");
 	this->manTexture.loadFromFile("Texture\\player\\manplayer.png");
 	//this->body.setTexture(this->bodyTexture);
+	//this->body.setPosition(200.0f, 490.0f);
 	this->body.setPosition(200.0f, 490.0f);
 	this->rec.top = 0;
 	this->rec.left = 0;
 	this->rec.width = manTexture.getSize().x/10;
 	this->rec.height = manTexture.getSize().y / 10;
 	this->body.setScale(0.9f, 1.0f);
+	
 }
 
 void Player::DRAW(RenderWindow* window)
 {
+	*this->y = body.getPosition().y;
 	jump();
 	control();
 	update(stateanimation);
@@ -50,6 +53,26 @@ void Player::selectcharacter(int index)
 	}
 	else {
 		this->body.setTexture(this->womenTexture);
+	}
+}
+
+void Player::setBig()
+{
+	//this->body.setScale(1.5, 1.5);
+}
+
+void Player::getposplayer(float* Y)
+{
+	this->y = Y;
+	//cout << "Player Address Y par:" << Y << endl;
+	//cout << "Player Address Y in class:" << this->y << endl;
+}
+
+void Player::checkdie(bool die)
+{
+	if (die) {
+		//cout << "hHAAHAHAHHA" << endl;
+		this->body.move(0, 10);
 	}
 }
 
@@ -106,9 +129,11 @@ void Player::control()
 		this->body.setPosition(200.0f, 530.0f);
 	}
 	else if(statejump==0){
+		//cout << "do" << endl;
 		stateanimation = 0;
 		this->body.setScale(0.9f, 1.0f);
-		this->body.setPosition(200.0f, 490.0f);
+		//cout << *this->y << endl;
+		//this->body.setPosition(200.0f, 490.0f);
 	}
 }
 

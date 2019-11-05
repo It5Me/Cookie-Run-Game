@@ -25,10 +25,17 @@ int main() {
 	Playback sound;
 	Pet pet;
 	Event event;
-	MAP map;
+	int indexMap = 0;
+	MAP map(&indexMap);
 	Bartop bartop;
 	Player player1;
+	float posy; // player.position.y
+	//cout << "main Address :" << &posy << endl;
+	
+	player1.getposplayer(&posy);
+	map.sendposplayer(&posy);
 	Texture ITEM1;
+	Texture ITEM2;
 	Texture immortal[8];
 	immortal[0].loadFromFile("Texture\\item\\font_I.png");
 	immortal[1].loadFromFile("Texture\\item\\font_M.png");
@@ -40,6 +47,7 @@ int main() {
 	immortal[7].loadFromFile("Texture\\item\\font_L.png");
 	int index_immortal=0;
 	bool bool_immortal[8] = { 0,0,0,0,0,0,0,0 };
+	bool bool_big = false;
 	bartop.pair(bool_immortal);
 	Menu menu;
 	unsigned long main_score=0; // ************score********
@@ -48,7 +56,9 @@ int main() {
 	Clock clock_runaway;
 	float totalrunaway = 0;
 	ITEM1.loadFromFile("Texture\\item\\testbear-01.png");
+	ITEM2.loadFromFile("Texture/item/BIG.png");
 	//cout << "EIEI" << endl;
+	
 	vector<Items> item1;
 	vector<Items>::iterator it;
 	vector<Items>::iterator tempit;
@@ -57,7 +67,7 @@ int main() {
 	float totalSpawn = 0.0;
 	Items* temp;
 	float j = 20;
-	for (int i = 0; i < 40; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		//cout << 590.0 - abs(sin(j) * 100) << endl;
 		if (i % 3 == 0) {
@@ -72,7 +82,9 @@ int main() {
 		j = (j < 0 ? 0 : j -0.5);
 		//cout << item1[i].getposition().x << endl;
 	}
-	int tempi = 40;
+	temp = new Items(ITEM2, 123, 1, Vector2f(1000.0 + (5 * 100), 590.0 - abs(sin(j / 2) * 250)), ID_BIG);
+	item1.push_back(*temp);
+	int tempi = 8;
 	//Items item2(ITEM1, 100,9,Vector2f(1500.0f,500.0f));
 
 	
@@ -91,7 +103,7 @@ int main() {
 		player1.selectcharacter(menu.select_player());
 		window.clear();
 		if (menu.check()) { // in game
-		
+			player1.checkdie(map.checkdie());
 			bartop.drawscore(&main_score);
 			totalrunaway += clock_runaway.restart().asSeconds();
 			if (totalrunaway > 0.01) {
@@ -114,10 +126,11 @@ int main() {
 			}
 			if (map.checkSpwan())
 			{
+
 				temp = new Items(ITEM1, 123, 4, Vector2f(1000.0 + (tempi * 100), 590.0 - abs(sin(j / 2) * 250)), ID_testbear);
 				item1.push_back(*temp);
 				j = (j < 0 ? 0 : j - 0.5);
-				cout << "Add" << endl;
+				//cout << "Add" << endl;
 			}
 
 			// start stop step
@@ -157,24 +170,32 @@ int main() {
 					case ID_l://cout << "L" << endl;
 						bool_immortal[ID_l] = true;
 						break;
+					case ID_BIG:
+						bool_big = true;
+						cout << "big" << endl;
+						break;
+						
 					}
 					main_score += it->getscore(); // chon!!
 					haveDel = true;
 					tempit = it;
-					cout << "size item : " <<item1.size() << endl;
+					//cout << "size item : " <<item1.size() << endl;
 					//cout << main_score << endl;
 				}
 				if(it->getposition().x < 0)
 				{
 					haveDel = true;
 					tempit = it;
-					cout << "Del" << endl;
+					//cout << "Del" << endl;
 				}
 			}
 			if (haveDel == true) // ต้องลบสักตัว
 			{
 				haveDel = false;
 				item1.erase(tempit);
+			}
+			if (bool_big == true) {
+				player1.setBig();
 			}
 		}
 		else {
