@@ -9,7 +9,7 @@ public:
 	bool check();
 	int select_player();
 	int select_animal();
-
+	void setstart();
 
 private:
 	Texture texture_animal[4];

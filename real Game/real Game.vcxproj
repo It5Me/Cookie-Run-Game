@@ -127,6 +127,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bartop.cpp" />
+    <ClCompile Include="endgame.cpp" />
     <ClCompile Include="Items.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Map.cpp" />
@@ -138,12 +139,14 @@
   <ItemGroup>
     <ClInclude Include="AllInOne.h" />
     <ClInclude Include="Bartop.h" />
+    <ClInclude Include="endgame.h" />
     <ClInclude Include="Items.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="Playback.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="positionhole.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

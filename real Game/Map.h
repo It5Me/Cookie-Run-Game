@@ -1,4 +1,5 @@
 #include"AllInOne.h"
+
 class MAP
 {
 public:
@@ -8,6 +9,7 @@ public:
 	bool checkHole();
 	void sendposplayer(float *Y);
 	bool checkdie();
+	void reset();
 private:
 	bool die = false;
 	float* y;
@@ -27,5 +29,8 @@ private:
 	Sprite spri_floorforest;
 	Texture texture_floorforest;
 	void MOVE();
+	int indexmap=0;
+	int indexhole = 0;
+	RectangleShape Hole[3][3];
 };
 

@@ -71,9 +71,16 @@ void Player::getposplayer(float* Y)
 void Player::checkdie(bool die)
 {
 	if (die) {
+		this->die = die;
 		//cout << "hHAAHAHAHHA" << endl;
 		this->body.move(0, 10);
 	}
+}
+
+void Player::reset()
+{
+	this->die = false;
+	this->body.setPosition(200.0f, 490.0f);
 }
 
 void Player::update(int row)
@@ -132,6 +139,10 @@ void Player::control()
 		//cout << "do" << endl;
 		stateanimation = 0;
 		this->body.setScale(0.9f, 1.0f);
+		if (this->die == false) {
+			this->body.setPosition(200.0f, 490.0f);
+		}
+		
 		//cout << *this->y << endl;
 		//this->body.setPosition(200.0f, 490.0f);
 	}

@@ -8,6 +8,7 @@
 #include"Bartop.h"	
 #include<stdlib.h>
 #include<time.h>
+#include"endgame.h"
 int collis(Player* P, Items* I)
 {
 	if (abs(P->getposition().x - I->getposition().x) <= P->gethalfsize().x + I->gethalfsize().x/2
@@ -27,6 +28,7 @@ int main() {
 	Event event;
 	int indexMap = 0;
 	MAP map(&indexMap);
+	endgame END;
 	Bartop bartop;
 	Player player1;
 	float posy; // player.position.y
@@ -35,7 +37,7 @@ int main() {
 	player1.getposplayer(&posy);
 	map.sendposplayer(&posy);
 	Texture ITEM1;
-	Texture ITEM2;
+	Texture ITEM2; 
 	Texture immortal[8];
 	immortal[0].loadFromFile("Texture\\item\\font_I.png");
 	immortal[1].loadFromFile("Texture\\item\\font_M.png");
@@ -102,11 +104,17 @@ int main() {
 		pet.SETposition(player1.getposition());
 		player1.selectcharacter(menu.select_player());
 		window.clear();
-		if (menu.check()) { // in game
-			player1.checkdie(map.checkdie());
+		if (menu.check() == true) { // in game
+			if (map.checkdie()) {//playerdie
+				player1.checkdie(true);
+				END.setstatus(true);
+				//endgame-> 0 1
+			}
+			
 			bartop.drawscore(&main_score);
 			totalrunaway += clock_runaway.restart().asSeconds();
-			if (totalrunaway > 0.01) {
+			
+			if (totalrunaway > 0.01 && END.getstatus()==false) {
 				totalrunaway = 0;
 				main_score++;                  //////////// score + alltime
 				//cout << main_score << endl;
@@ -134,6 +142,7 @@ int main() {
 			}
 
 			// start stop step
+			if (END.getstatus()==false)
 			for (it = item1.begin();it!=item1.end();++it)
 			{
 				it->DRAW(&window);     //
@@ -196,6 +205,16 @@ int main() {
 			}
 			if (bool_big == true) {
 				player1.setBig();
+			}
+			if (END.getstatus()==true){
+				END.draw(&window);
+				if (END.ismenustart() == true) {
+					menu.setstart();
+					END.setstatus(false);
+					player1.reset();
+					map.reset();
+					main_score = 0;
+				}
 			}
 		}
 		else {

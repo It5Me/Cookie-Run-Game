@@ -2,7 +2,7 @@
 
 Menu::Menu()
 {
-	//this->loadfile();
+	this->loadfile();
 	this->texture[0].loadFromFile("Texture\\menu\\bgfront-01.jpg");
 	this->texture[1].loadFromFile("Texture\\menu\\bg_highscore.png");
 	this->texture[2].loadFromFile("Texture\\menu\\showname.png");
@@ -129,6 +129,11 @@ int Menu::select_player()
 int Menu::select_animal()
 {
 	return this->index_animal;
+}
+
+void Menu::setstart()
+{
+	this->start = false;
 }
 
 void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, bool* p,int index)

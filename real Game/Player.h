@@ -10,7 +10,9 @@ public:
 	void setBig();
 	void getposplayer(float *Y);
 	void checkdie(bool die);
+	void reset();
 private:
+	bool die=false;
 	float* y;
 	Sprite body;
 	Texture manTexture;
