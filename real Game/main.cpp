@@ -9,6 +9,9 @@
 #include<stdlib.h>
 #include<time.h>
 #include"endgame.h"
+
+
+
 int collis(Player* P, Items* I)
 {
 	if (abs(P->getposition().x - I->getposition().x) <= P->gethalfsize().x + I->gethalfsize().x/2
@@ -20,6 +23,9 @@ int collis(Player* P, Items* I)
 	return -1;
 }
 int main() {
+
+	
+
 	srand(time(NULL));
 	RenderWindow window(VideoMode(size_width, size_height), name_game, Style::Close);
 	window.setFramerateLimit(120);
@@ -37,7 +43,8 @@ int main() {
 	player1.getposplayer(&posy);
 	map.sendposplayer(&posy);
 	Texture ITEM1;
-	Texture ITEM2; 
+	Texture ITEM2;
+	Texture ITEM3; // test object
 	Texture immortal[8];
 	immortal[0].loadFromFile("Texture\\item\\font_I.png");
 	immortal[1].loadFromFile("Texture\\item\\font_M.png");
@@ -51,14 +58,16 @@ int main() {
 	bool bool_immortal[8] = { 0,0,0,0,0,0,0,0 };
 	bool bool_big = false;
 	bartop.pair(bool_immortal);
-	Menu menu;
+	Menu menu;	
 	unsigned long main_score=0; // ************score********
 	int tempcolision = 0;
-	int HP = 100;
+	float HP = 100;
 	Clock clock_runaway;
 	float totalrunaway = 0;
 	ITEM1.loadFromFile("Texture\\item\\testbear-01.png");
-	ITEM2.loadFromFile("Texture/item/BIG.png");
+	//ITEM2.loadFromFile("Texture/item/objecttest.png");
+	//ITEM3.loadFromFile("Texture\\item\\objecttest.png");
+	
 	//cout << "EIEI" << endl;
 	
 	vector<Items> item1;
@@ -89,6 +98,9 @@ int main() {
 	int tempi = 8;
 	//Items item2(ITEM1, 100,9,Vector2f(1500.0f,500.0f));
 
+	///////////////////////TESTJAAAAAAA
+	
+
 	
 	while (window.isOpen()) {
 		if (Keyboard::isKeyPressed(Keyboard::T)) {
@@ -103,10 +115,11 @@ int main() {
 		pet.selectcharacteranimal(menu.select_animal());
 		pet.SETposition(player1.getposition());
 		player1.selectcharacter(menu.select_player());
+		player1.checkhole(map.checkonhole());
 		window.clear();
 		if (menu.check() == true) { // in game
-			if (map.checkdie()) {//playerdie
-				player1.checkdie(true);
+			if (player1.checkdie()) {//playerdie/////////////
+				map.setdie(true);
 				END.setstatus(true);
 				//endgame-> 0 1
 			}
@@ -116,6 +129,7 @@ int main() {
 			
 			if (totalrunaway > 0.01 && END.getstatus()==false) {
 				totalrunaway = 0;
+				HP -= 0.01;     ///////////////// เลือดลด
 				main_score++;                  //////////// score + alltime
 				//cout << main_score << endl;
 			}
@@ -142,62 +156,66 @@ int main() {
 			}
 
 			// start stop step
-			if (END.getstatus()==false)
-			for (it = item1.begin();it!=item1.end();++it)
+			if (END.getstatus() == false)
 			{
-				it->DRAW(&window);     //
-				//cout << player1.getposition().x << " " << player1.getposition().y << endl;
-				//cout << item1[i].gethalfsize().x/2 << " " << item1[i].gethalfsize().y/2 << endl;
-				tempcolision = collis(&player1, &*it);
-				if (tempcolision != -1)
+				
+				for (it = item1.begin(); it != item1.end(); ++it)
 				{
-					switch (tempcolision) // ตรวจสอบการชน
+					it->DRAW(&window);     //
+					//cout << player1.getposition().x << " " << player1.getposition().y << endl;
+					//cout << item1[i].gethalfsize().x/2 << " " << item1[i].gethalfsize().y/2 << endl;
+					tempcolision = collis(&player1, &*it);
+					if (tempcolision != -1)
 					{
-					case ID_i: //cout << "I" << endl;
-						bool_immortal[ID_i] = true;
-						break;
-					case ID_m://cout << "M" << endl;
-						if (bool_immortal[ID_m] == false) {
-							bool_immortal[ID_m] = true;
+						switch (tempcolision) // ตรวจสอบการชน
+						{
+						case ID_i: //cout << "I" << endl;
+							bool_immortal[ID_i] = true;
+							break;
+						case ID_m://cout << "M" << endl;
+							if (bool_immortal[ID_m] == false) {
+								bool_immortal[ID_m] = true;
+							}
+							else {
+								bool_immortal[ID_m + 1] = true;
+							}
+							break;
+						case ID_o://cout << "O" << endl;
+							bool_immortal[ID_o] = true;
+							break;
+						case ID_r://cout << "R" << endl;
+							bool_immortal[ID_r] = true;
+							break;
+						case ID_t://cout << "T" << endl;
+							bool_immortal[ID_t] = true;
+							break;
+						case ID_a://cout << "A" << endl;
+							bool_immortal[ID_a] = true;
+							break;
+						case ID_l://cout << "L" << endl;
+							bool_immortal[ID_l] = true;
+							break;
+						case ID_BIG:
+							bool_big = true;
+							cout << "big" << endl;
+							break;
+
 						}
-						else {
-							bool_immortal[ID_m + 1] = true;
-						}
-						break;
-					case ID_o://cout << "O" << endl;
-						bool_immortal[ID_o] = true;
-						break;
-					case ID_r://cout << "R" << endl;
-						bool_immortal[ID_r] = true;
-						break;
-					case ID_t://cout << "T" << endl;
-						bool_immortal[ID_t] = true;
-						break;
-					case ID_a://cout << "A" << endl;
-						bool_immortal[ID_a] = true;
-						break;
-					case ID_l://cout << "L" << endl;
-						bool_immortal[ID_l] = true;
-						break;
-					case ID_BIG:
-						bool_big = true;
-						cout << "big" << endl;
-						break;
-						
+						main_score += it->getscore(); // chon!!
+						haveDel = true;
+						tempit = it;
+						//cout << "size item : " <<item1.size() << endl;
+						//cout << main_score << endl;
 					}
-					main_score += it->getscore(); // chon!!
-					haveDel = true;
-					tempit = it;
-					//cout << "size item : " <<item1.size() << endl;
-					//cout << main_score << endl;
-				}
-				if(it->getposition().x < 0)
-				{
-					haveDel = true;
-					tempit = it;
-					//cout << "Del" << endl;
+					if (it->getposition().x < 0)
+					{
+						haveDel = true;
+						tempit = it;
+						//cout << "Del" << endl;
+					}
 				}
 			}
+			
 			if (haveDel == true) // ต้องลบสักตัว
 			{
 				haveDel = false;

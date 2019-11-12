@@ -4,7 +4,7 @@ class Bartop
 public:
 	Bartop();
 	void DRAW(RenderWindow *window);
-	void update_hp(int hp);
+	void update_hp(float hp);
 	void pair(bool* P);
 	void drawscore(unsigned long *P);
 private:

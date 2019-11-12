@@ -1,4 +1,4 @@
-#include "Player.h"
+﻿#include "Player.h"
 
 Player::Player()
 {
@@ -19,7 +19,10 @@ void Player::DRAW(RenderWindow* window)
 {
 	*this->y = body.getPosition().y;
 	jump();
-	control();
+	if (this->die == false)control();
+	else {
+		body.setPosition(0, -1000);
+	}
 	update(stateanimation);
 	window->draw(this->body);
 }
@@ -68,19 +71,20 @@ void Player::getposplayer(float* Y)
 	//cout << "Player Address Y in class:" << this->y << endl;
 }
 
-void Player::checkdie(bool die)
-{
-	if (die) {
-		this->die = die;
-		//cout << "hHAAHAHAHHA" << endl;
-		this->body.move(0, 10);
-	}
-}
-
 void Player::reset()
 {
 	this->die = false;
 	this->body.setPosition(200.0f, 490.0f);
+}
+
+void Player::checkhole(bool state)
+{
+	this->onhole = state;
+}
+
+bool Player::checkdie()
+{
+	return this->die;
 }
 
 void Player::update(int row)
@@ -114,6 +118,7 @@ void Player::update(int row)
 
 void Player::control()
 {
+	
 	if (Keyboard::isKeyPressed(Keyboard::Space) && stateanimation!=3) { ////////////////// jump
 		jumpdelta += clockjump.restart().asSeconds();
 		if (this->statejump == 0) {
@@ -132,15 +137,33 @@ void Player::control()
 	}
 	else if (Keyboard::isKeyPressed(Keyboard::S) && stateanimation!=2 && stateanimation!=5) {
 		this->stateanimation = 3;
-		this->body.setScale(0.7f,0.8f);
-		this->body.setPosition(200.0f, 530.0f);
+		this->body.setScale(0.9f,1.0f);
+		
+		if (this->onhole == true) {
+			this->body.move(0, 14);
+		}
+		else
+		{
+			this->body.setPosition(200.0f, 510.0f);
+		}
+		if (this->body.getPosition().y > 800) {
+			this->die = true;
+			cout << "DIE" << endl;
+		}
 	}
 	else if(statejump==0){
 		//cout << "do" << endl;
 		stateanimation = 0;
 		this->body.setScale(0.9f, 1.0f);
-		if (this->die == false) {
+		if (this->die == false && this->onhole==false) {
 			this->body.setPosition(200.0f, 490.0f);
+		}
+		else if (this->onhole == true){
+			this->body.move(0, 15); //// สั่งให้ตก แต่ว่าไม่ได้
+		}
+		if (this->body.getPosition().y > 800) {
+			this->die = true;
+			cout << "DIE" << endl;
 		}
 		
 		//cout << *this->y << endl;
@@ -160,14 +183,27 @@ void Player::jump()
 	else if (this->statejump == 2) {
 		this->body.setPosition(this->body.getPosition().x, this->body.getPosition().y +	 this->A);
 		A += 0.3;
-
-		if (this->body.getPosition().y > 500) {
-			this->body.setPosition(200.0f, 490.0f);
-			this->stateanimation = 0;
-			this->A = 10;
-			this->statejump = 0;
-			this->jumphight = false;
+		if (this->onhole==true) {
+			//cout << "ONHOLE" << endl;
+			if (this->body.getPosition().y > 800) {
+				//this->body.setPosition(200.0f, 490.0f);
+				this->die = true;
+				this->stateanimation = 0;
+				this->A = 10;
+				this->statejump = 0;
+				this->jumphight = false;
+			}
 		}
+		else {
+			if (this->body.getPosition().y > 500) {
+				this->body.setPosition(200.0f, 490.0f);
+				this->stateanimation = 0;
+				this->A = 10;
+				this->statejump = 0;
+				this->jumphight = false;
+			}
+		}
+
 	}
 	
 }

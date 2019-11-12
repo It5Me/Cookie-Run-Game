@@ -1,4 +1,7 @@
+
+#include"Obstacle.h"
 #include"AllInOne.h"
+
 
 class MAP
 {
@@ -8,9 +11,13 @@ public:
 	bool checkSpwan();
 	bool checkHole();
 	void sendposplayer(float *Y);
-	bool checkdie();
 	void reset();
+	bool checkonhole();
+	void setdie(bool state);
 private:
+	Texture objecttexture[12];
+	vector <Obstacle*> obstacleList;
+	bool b_onhole = false;
 	bool die = false;
 	float* y;
 	RectangleShape hole;

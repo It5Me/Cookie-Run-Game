@@ -9,9 +9,11 @@ public:
 	void selectcharacter(int index);
 	void setBig();
 	void getposplayer(float *Y);
-	void checkdie(bool die);
 	void reset();
+	void checkhole(bool state);
+	bool checkdie();
 private:
+	bool onhole=false;
 	bool die=false;
 	float* y;
 	Sprite body;

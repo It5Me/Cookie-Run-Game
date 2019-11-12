@@ -1,4 +1,5 @@
 ﻿#include "Map.h"
+
 #include"positionhole.h"
 
 MAP::MAP(int* P)
@@ -6,7 +7,7 @@ MAP::MAP(int* P)
 	this->indexMap = P;
 	this->texture_mapfire.loadFromFile("Texture/map1/mapfire.jpg");
 	this->texture_mapice.loadFromFile("Texture/map1/mapice.jpg");
-	this->texture_mapforest.loadFromFile("Texture/map1/mapforest.jpg");
+	this->texture_mapforest.loadFromFile("Texture/map1/mapforest4.jpg");
 	this->texture_floorfire.loadFromFile("Texture/map1/floorfire.png");
 	this->texture_floorice.loadFromFile("Texture/map1/floorice.png");
 	this->texture_floorforest.loadFromFile("Texture/map1/floorforest.png");
@@ -16,10 +17,24 @@ MAP::MAP(int* P)
 	this->spri_floorfire.setTexture(this->texture_floorfire);
 	this->spri_floorice.setTexture(this->texture_floorice);
 	this->spri_floorforest.setTexture(this->texture_floorforest);
+	
+
+	objecttexture[0].loadFromFile("Texture/map1/A.png"); //1
+	objecttexture[1].loadFromFile("Texture/map1/B.png"); //2
+	objecttexture[2].loadFromFile("Texture/map1/1.png"); //3
+	objecttexture[3].loadFromFile("Texture/map1/2.png"); //4
+	objecttexture[4].loadFromFile("Texture/map1/3.png");
+	objecttexture[5].loadFromFile("Texture/map1/4.png");
+	objecttexture[6].loadFromFile("Texture/map1/5.png");
+	objecttexture[7].loadFromFile("Texture/map1/6.png");
+	objecttexture[8].loadFromFile("Texture/map1/7.png");
+	objecttexture[9].loadFromFile("Texture/map1/8.png");
 	setpositionmapall();
+	
 
 	this->hole.setSize(Vector2f(400, 200));
 	this->hole.setPosition(1200, 700);
+	/*
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			if (i == 0) {
@@ -34,7 +49,7 @@ MAP::MAP(int* P)
 			this->Hole[i][j].setSize(Vector2f(lengthhole[i][j], 200));
 			//cout << " HOLELELELELE" << " " << positionstart[i][j] << " " << lengthhole[i][j] << endl;
 		}
-	}
+	}*/
 	//this->floor1Texture.setRepeated(true);
 	//this->floor1.setTextureRect(IntRect(0, 0, 20000, 900));
 }
@@ -65,12 +80,24 @@ void MAP::DRAW(RenderWindow* window)
 				this->indexhole = 0;
 				cout << "LOADMAP1" << endl;
 				*this->indexMap = 1;
+				this->indexmap = *this->indexMap;
 				this->spri_mapfire.setPosition(0, 0);
 				this->spri_floorfire.setPosition(1600, 0);
+				for (int i = 0; i < this->obstacleList.size(); i++) {
+					Obstacle* P = this->obstacleList[i];
+					delete P;
+					//this->obstacleList.erase(this->obstacleList.begin() + i);
+				}
+				this->obstacleList.clear();
+				for (int i = 0; i < 8; i++) {
+					cout << "SET" << endl;
+					obstacleList.push_back(new Obstacle(objecttexture[indexobmap2[i] - 1], positionobmap2[i], typeobmap2[i]));
+				}
 			}
 			window->draw(spri_mapforest);
 			window->draw(spri_floorforest);
-		}	
+		}
+		
 		break;
 	case 1:
 		if (this->spri_floorfire.getPosition().x > 0) {
@@ -86,8 +113,19 @@ void MAP::DRAW(RenderWindow* window)
 				this->indexhole = 0;
 				cout << "LOADMAP2" << endl;
 				*this->indexMap = 2;
+				this->indexmap = *this->indexMap;
 				this->spri_mapice.setPosition(0, 0);
 				this->spri_floorice.setPosition(1600, 0);
+				for (int i = 0; i < this->obstacleList.size(); i++) {
+					Obstacle* P = this->obstacleList[i];
+					delete P;
+					//this->obstacleList.erase(this->obstacleList.begin() + i);
+				}
+				this->obstacleList.clear();
+				for (int i = 0; i < 8; i++) {
+					cout << "SET" << endl;
+					obstacleList.push_back(new Obstacle(objecttexture[indexobmap3[i] - 1], positionobmap3[i], typeobmap3[i]));
+				}
 			}
 			window->draw(spri_mapfire);
 			window->draw(spri_floorfire);
@@ -107,8 +145,19 @@ void MAP::DRAW(RenderWindow* window)
 				this->indexhole = 0;
 				cout << "LOADMAP" << endl;
 				*this->indexMap = 0;
+				this->indexmap = *this->indexMap;
 				this->spri_mapforest.setPosition(0, 0);
 				this->spri_floorforest.setPosition(1600, 0);
+				for (int i = 0; i < this->obstacleList.size(); i++) {
+					Obstacle* P = this->obstacleList[i];
+					delete P;
+					//this->obstacleList.erase(this->obstacleList.begin() + i);
+				}
+				this->obstacleList.clear();
+				for (int i = 0; i < 8; i++) {
+					cout << "SET" << endl;
+					obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i], typeobmap1[i]));
+				}
 			}
 			window->draw(spri_mapice);
 			window->draw(spri_floorice);
@@ -116,17 +165,31 @@ void MAP::DRAW(RenderWindow* window)
 		
 		break;
 	}
+	for (int i = 0; i < obstacleList.size(); i++) {
+		this->obstacleList[i]->draw(window);
+		if (this->die == false) {
+			this->obstacleList[i]->move();
+		}
+		/*if (this->obstacleList[i]->isDelete()) {
+			Obstacle* P;
+			P = this->obstacleList[i];
+			delete P;
+			this->obstacleList.erase(this->obstacleList.begin() + i);
+			break;
+		}*/
+		//cout << "DRAW" << endl;
+	}
 	if (this->die == false)
 	{
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				this->Hole[i][j].move(-8, 0);     ////////////////////////////////hole///////////////
-				window->draw(this->Hole[i][j]);
+				//window->draw(this->Hole[i][j]);
 			}
 		}
 	}
 
-	window->draw(this->hole);
+	//window->draw(this->hole);
 
 }
 
@@ -152,59 +215,70 @@ bool MAP::checkHole()
 {
 	//cout << fabs(this->spri_floorforest.getPosition().x) << endl;
 	//return fabs(this->spri_floorforest.getPosition().x)+300>1200&& fabs(this->spri_floorforest.getPosition().x)+300<1600;
-//cout << "indexmap" << this->indexmap << "  HOLE" << this->indexhole << endl;   
+//cout << "indexmap" << this->indexmap << "  HOLE" << this->indexhole << endl;  
 	if (this->die == false)
 	switch (*this->indexMap)
 	{
 	case 0:
-		if (fabs(this->spri_floorforest.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole]
-			&& fabs(this->spri_floorforest.getPosition().x) + 300 < positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]
-			&& *this->y == 490
+		if (fabs(this->spri_floorforest.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole]+70
+			&& fabs(this->spri_floorforest.getPosition().x) + 300 < positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]-50
+			//&& *this->y == 490
 			)
-		{
-			cout << "DIE" << endl;
-			this->die = true;
+		{ 
+			this->b_onhole = true;
+			//cout << "DIE" << endl;
+			//this->die = true;
 			return 1;
 		}
+		else {
+			this->b_onhole = false;
+		}
 		if (this->indexmap==0&&fabs(this->spri_floorforest.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
+			cout << this->indexhole << " <-- UP index1" << endl;
 			this->indexhole++;
-			if (this->indexhole > 2) {
-				indexhole = 3;
-			}
+			
 		}
 			break;
 	case 1:
-		if (fabs(this->spri_floorfire.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole]
-			&& fabs(this->spri_floorfire.getPosition().x) + 300 < positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]
-			&& *this->y == 490
+		//cout << this->indexhole << endl;
+		if (fabs(this->spri_floorfire.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole]+60
+			&& fabs(this->spri_floorfire.getPosition().x) + 300 < positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]-50
+			//&& *this->y == 490
 			)
 		{
-			cout << "DIE" << endl;
-			this->die = true;
+			//cout << "DIE" << endl;
+			//this->die = true;
+			this->b_onhole = true;
 			return 1;
 		}
-		if (fabs(this->spri_floorfire.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
+		else {
+			this->b_onhole = false;
+		}
+		//cout << fabs(this->spri_floorfire.getPosition().x + 300) << endl;
+		if (this->indexmap == 1 &&fabs(this->spri_floorfire.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
+			cout << this->indexhole << " <-- UP index2 :: " << this->indexmap << " <--indexMap" << endl;
 			this->indexhole++;
-			if (this->indexhole > 2) {
-				indexhole = 0;
-			}
+			
 		}
 		break;
 	case 2:
-		if (fabs(this->spri_floorice.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole]
-			&& fabs(this->spri_floorice.getPosition().x) + 300 < positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]
-			&& *this->y == 490
+		if (fabs(this->spri_floorice.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole]+50
+			&& fabs(this->spri_floorice.getPosition().x) + 300 < positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]-50
+			//&& *this->y == 490
 			)
 		{
-			cout << "DIE" << endl;
-			this->die = true;
+			this->b_onhole = true;
+			//cout << "DIE" << endl;
+			//this->die = true;
 			return 1;
 		}
-		if (fabs(this->spri_floorice.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
+		else {
+			this->b_onhole = false;
+		}
+		if (this->indexmap == 2 && fabs(this->spri_floorice.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
+			
+			cout << this->indexhole << " <-- UP index3" << endl;
 			this->indexhole++;
-			if (this->indexhole > 2) {
-				indexhole = 0;
-			}
 		}
 		break;
 	}
@@ -221,21 +295,24 @@ void MAP::sendposplayer(float* Y)
 	
 }
 
-bool MAP::checkdie()
-{
-	return this->die;
-}
+ 
 
 void MAP::reset()///////////////////////////////////////////////////
 {
+	for (int i = 0; i < this->obstacleList.size(); i++) {
+		Obstacle* P = this->obstacleList[i];
+		delete P;
+		//this->obstacleList.erase(this->obstacleList.begin() + i);
+	}
+	this->obstacleList.clear();
 	this->die = false;
 	setpositionmapall();
 	*this->indexMap = 0;
 	this->indexhole = 0;
 	this->indexmap = 0;
 	//เดี๋ยวมาลบนา้จ้า้าาาาาาา
-	this->hole.setSize(Vector2f(400, 200));
-	this->hole.setPosition(1200, 700);
+	//this->hole.setSize(Vector2f(400, 200));
+	//this->hole.setPosition(1200, 700);
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			if (i == 0) {
@@ -253,8 +330,22 @@ void MAP::reset()///////////////////////////////////////////////////
 	}
 }
 
+bool MAP::checkonhole()
+{
+	return this->b_onhole;
+}
+
+void MAP::setdie(bool state)
+{
+	this->die = state;
+}
+
 void MAP::setpositionmapall()
 {
+	for (int i = 0; i < 8; i++) {
+		cout << "SET" << endl;
+		obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i], typeobmap1[i]));
+	}
 	this->spri_mapforest.setPosition(0, 0);
 	this->spri_floorforest.setPosition(0, 0);
 	this->spri_mapfire.setPosition(0, 0);

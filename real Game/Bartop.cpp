@@ -64,7 +64,7 @@ void Bartop::DRAW(RenderWindow* window)
 	window->draw(this->text_score);
 }
 
-void Bartop::update_hp(int hp)
+void Bartop::update_hp(float hp)
 {	
 	//cout << float(hp / 100.0f) << endl;
 	if (hp >= 0 && hp <= 100) {
