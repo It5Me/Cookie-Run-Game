@@ -15,7 +15,7 @@ public:
 	bool checkonhole();
 	void setdie(bool state);
 private:
-	Texture objecttexture[12];
+	Texture objecttexture[21]; /// << ----
 	vector <Obstacle*> obstacleList;
 	bool b_onhole = false;
 	bool die = false;

@@ -19,16 +19,27 @@ MAP::MAP(int* P)
 	this->spri_floorforest.setTexture(this->texture_floorforest);
 	
 
-	objecttexture[0].loadFromFile("Texture/map1/A.png"); //1
-	objecttexture[1].loadFromFile("Texture/map1/B.png"); //2
-	objecttexture[2].loadFromFile("Texture/map1/1.png"); //3
-	objecttexture[3].loadFromFile("Texture/map1/2.png"); //4
-	objecttexture[4].loadFromFile("Texture/map1/3.png");
-	objecttexture[5].loadFromFile("Texture/map1/4.png");
-	objecttexture[6].loadFromFile("Texture/map1/5.png");
-	objecttexture[7].loadFromFile("Texture/map1/6.png");
-	objecttexture[8].loadFromFile("Texture/map1/7.png");
-	objecttexture[9].loadFromFile("Texture/map1/8.png");
+	this->objecttexture[0].loadFromFile("Texture/map1/A.png"); //1
+	this->objecttexture[1].loadFromFile("Texture/map1/B.png"); //2
+	this->objecttexture[2].loadFromFile("Texture/map1/1.png"); //3
+	this->objecttexture[3].loadFromFile("Texture/map1/2.png"); //4
+	this->objecttexture[4].loadFromFile("Texture/map1/3.png");
+	this->objecttexture[5].loadFromFile("Texture/map1/4.png");
+	this->objecttexture[6].loadFromFile("Texture/map1/5.png");
+	this->objecttexture[7].loadFromFile("Texture/map1/6.png");
+	this->objecttexture[8].loadFromFile("Texture/map1/7.png");
+	this->objecttexture[9].loadFromFile("Texture/map1/8.png");
+	this->objecttexture[10].loadFromFile("Texture/map1/9.png");
+	this->objecttexture[11].loadFromFile("Texture/map1/10.png");
+	this->objecttexture[12].loadFromFile("Texture/map1/11.png");
+	this->objecttexture[13].loadFromFile("Texture/map1/12.png");
+	this->objecttexture[14].loadFromFile("Texture/map1/13.png");
+	this->objecttexture[15].loadFromFile("Texture/map1/14.png");
+	this->objecttexture[16].loadFromFile("Texture/map1/15.png");
+	this->objecttexture[17].loadFromFile("Texture/map1/16.png");
+	this->objecttexture[18].loadFromFile("Texture/map1/17.png");
+	this->objecttexture[19].loadFromFile("Texture/map1/18.png");
+	this->objecttexture[20].loadFromFile("Texture/map1/19.png");
 	setpositionmapall();
 	
 
@@ -89,7 +100,7 @@ void MAP::DRAW(RenderWindow* window)
 					//this->obstacleList.erase(this->obstacleList.begin() + i);
 				}
 				this->obstacleList.clear();
-				for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 20; i++) {
 					cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap2[i] - 1], positionobmap2[i], typeobmap2[i]));
 				}
@@ -122,7 +133,7 @@ void MAP::DRAW(RenderWindow* window)
 					//this->obstacleList.erase(this->obstacleList.begin() + i);
 				}
 				this->obstacleList.clear();
-				for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 20; i++) {
 					cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap3[i] - 1], positionobmap3[i], typeobmap3[i]));
 				}
@@ -154,7 +165,7 @@ void MAP::DRAW(RenderWindow* window)
 					//this->obstacleList.erase(this->obstacleList.begin() + i);
 				}
 				this->obstacleList.clear();
-				for (int i = 0; i < 8; i++) {
+				for (int i = 0; i < 20; i++) {
 					cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i], typeobmap1[i]));
 				}
@@ -342,7 +353,7 @@ void MAP::setdie(bool state)
 
 void MAP::setpositionmapall()
 {
-	for (int i = 0; i < 8; i++) {
+	for (int i = 0; i < 19; i++) {  ////
 		cout << "SET" << endl;
 		obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i], typeobmap1[i]));
 	}
