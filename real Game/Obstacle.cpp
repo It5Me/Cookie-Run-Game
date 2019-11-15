@@ -28,7 +28,7 @@ Obstacle::Obstacle(Texture texture, float x, int type)
 
 Obstacle::~Obstacle()
 {
-	cout << "delete obstacle complete" << endl;
+	//cout << "delete obstacle complete" << endl;
 }
 
 void Obstacle::draw(RenderWindow* window)

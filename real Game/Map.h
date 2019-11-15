@@ -14,7 +14,17 @@ public:
 	void reset();
 	bool checkonhole();
 	void setdie(bool state);
+	void setpointerhp(float* hp);
+	void setpointerstatusplayer(int *status);
 private:
+	
+	//sound
+	
+
+	//
+
+	int *statusplayer;
+	float *hpplayer;
 	Texture objecttexture[21]; /// << ----
 	vector <Obstacle*> obstacleList;
 	bool b_onhole = false;
@@ -35,9 +45,13 @@ private:
 	Texture texture_mapforest;
 	Sprite spri_floorforest;
 	Texture texture_floorforest;
+	Texture texture_mapdesert;
+	Sprite spri_mapdesert;
+	Texture texture_floordesert;
+	Sprite spri_floordesert;
 	void MOVE();
 	int indexmap=0;
 	int indexhole = 0;
-	RectangleShape Hole[3][3];
+	//RectangleShape Hole[4][3];
 };
 

@@ -4,6 +4,7 @@ Player::Player()
 {
 	this->womenTexture.loadFromFile("Texture\\player\\playerwomanall-01.png");
 	this->manTexture.loadFromFile("Texture\\player\\manplayer.png");
+	//cout << womenTexture.getSize().x / 10 << " " << womenTexture.getSize().y / 10 << endl;
 	//this->body.setTexture(this->bodyTexture);
 	//this->body.setPosition(200.0f, 490.0f);
 	this->body.setPosition(200.0f, 490.0f);
@@ -19,12 +20,31 @@ void Player::DRAW(RenderWindow* window)
 {
 	*this->y = body.getPosition().y;
 	jump();
-	if (this->die == false)control();
+	if (*this->status != 0)control();
 	else {
 		body.setPosition(0, -1000);
 	}
 	update(stateanimation);
-	window->draw(this->body);
+	
+	if (*this->status == 2) {
+
+		this->timeplayer += clockplayer.restart().asSeconds();
+		if (this->timeplayer >= 0.2) {
+			this->timeplayer = 0;
+			this->countdraw++;
+			cout << countdraw << endl;
+		}
+		if (this->countdraw % 2 == 0) {
+			window->draw(this->body);
+		}
+		if (this->countdraw==8) {
+			*this->status = 1;
+			this->countdraw = 0;
+		}
+	}
+	else {
+		window->draw(this->body);
+	}
 }
 
 Vector2f Player::getposition()
@@ -73,7 +93,8 @@ void Player::getposplayer(float* Y)
 
 void Player::reset()
 {
-	this->die = false;
+	//this->die = false;
+	*this->status = 1;
 	this->body.setPosition(200.0f, 490.0f);
 }
 
@@ -84,7 +105,32 @@ void Player::checkhole(bool state)
 
 bool Player::checkdie()
 {
-	return this->die;
+	return *this->status==0;
+}
+
+void Player::setpointerstatusplayer(int* status)
+{
+	this->status = status;
+}
+
+void Player::statusplayer()
+{
+	switch (*this->status)
+	{
+	case 0:
+		// ตาย
+		break;
+		
+	case 1:
+		// รอด
+		break;
+	case 2:
+		// กระพริบ
+		break;
+	case 3:
+		break;
+		//ตัวฝหญ่
+	}
 }
 
 void Player::update(int row)
@@ -139,15 +185,17 @@ void Player::control()
 		this->stateanimation = 3;
 		this->body.setScale(0.9f,1.0f);
 		
-		if (this->onhole == true) {
+		if (this->onhole == true && *this->status==1) {
 			this->body.move(0, 14);
 		}
 		else
 		{
 			this->body.setPosition(200.0f, 510.0f);
 		}
-		if (this->body.getPosition().y > 800) {
-			this->die = true;
+		if (this->body.getPosition().y > 800 ) {
+			//this->die = true;
+		
+			*this->status = 0;
 			cout << "DIE" << endl;
 		}
 	}
@@ -155,14 +203,14 @@ void Player::control()
 		//cout << "do" << endl;
 		stateanimation = 0;
 		this->body.setScale(0.9f, 1.0f);
-		if (this->die == false && this->onhole==false) {
+		if (this->status != 0 && this->onhole==false) {
 			this->body.setPosition(200.0f, 490.0f);
 		}
-		else if (this->onhole == true){
+		else if (this->onhole == true && *this->status==1){
 			this->body.move(0, 15); //// สั่งให้ตก แต่ว่าไม่ได้
 		}
 		if (this->body.getPosition().y > 800) {
-			this->die = true;
+			*this->status = 0;
 			cout << "DIE" << endl;
 		}
 		
@@ -183,11 +231,11 @@ void Player::jump()
 	else if (this->statejump == 2) {
 		this->body.setPosition(this->body.getPosition().x, this->body.getPosition().y +	 this->A);
 		A += 0.3;
-		if (this->onhole==true) {
+		if (this->onhole==true && *this->status==1) {
 			//cout << "ONHOLE" << endl;
 			if (this->body.getPosition().y > 800) {
 				//this->body.setPosition(200.0f, 490.0f);
-				this->die = true;
+				*this->status = 0;
 				this->stateanimation = 0;
 				this->A = 10;
 				this->statejump = 0;

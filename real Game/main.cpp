@@ -33,10 +33,16 @@ int main() {
 	Pet pet;
 	Event event;
 	int indexMap = 0;
+	float HP = 100;
+	int statusplayer = 1;
 	MAP map(&indexMap);
+	Player player1;
+	player1.setpointerstatusplayer(&statusplayer);
+	map.setpointerstatusplayer(&statusplayer);
+	map.setpointerhp(&HP);
 	endgame END;
 	Bartop bartop;
-	Player player1;
+	
 	float posy; // player.position.y
 	//cout << "main Address :" << &posy << endl;
 	
@@ -61,10 +67,10 @@ int main() {
 	Menu menu;	
 	unsigned long main_score=0; // ************score********
 	int tempcolision = 0;
-	float HP = 100;
+	
 	Clock clock_runaway;
 	float totalrunaway = 0;
-	ITEM1.loadFromFile("Texture\\item\\testbear-01.png");
+	ITEM1.loadFromFile("Texture\\item\\testbear-01.png"); //////////////////////////////////
 	//ITEM2.loadFromFile("Texture/item/objecttest.png");
 	//ITEM3.loadFromFile("Texture\\item\\objecttest.png");
 	
@@ -167,6 +173,7 @@ int main() {
 					tempcolision = collis(&player1, &*it);
 					if (tempcolision != -1)
 					{
+						sound.playcoin();
 						switch (tempcolision) // ตรวจสอบการชน
 						{
 						case ID_i: //cout << "I" << endl;

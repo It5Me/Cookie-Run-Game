@@ -12,9 +12,15 @@ public:
 	void reset();
 	void checkhole(bool state);
 	bool checkdie();
+	void setpointerstatusplayer(int* status);
 private:
+	Clock clockplayer;
+	float timeplayer = 0;
+	int countdraw=0;
+	int* status;  
+	void statusplayer();
 	bool onhole=false;
-	bool die=false;
+	//bool die=false;
 	float* y;
 	Sprite body;
 	Texture manTexture;
