@@ -9,6 +9,8 @@
 #include<stdlib.h>
 #include<time.h>
 #include"endgame.h"
+#include"Pausepage.h"
+
 
 
 
@@ -25,10 +27,12 @@ int collis(Player* P, Items* I)
 int main() {
 
 	
-
+	bool gamepause = false;
 	srand(time(NULL));
 	RenderWindow window(VideoMode(size_width, size_height), name_game, Style::Close);
 	window.setFramerateLimit(120);
+	Pausepage pausepage;
+	pausepage.setpointer(&gamepause);
 	Playback sound;
 	Pet pet;
 	Event event;
@@ -36,11 +40,14 @@ int main() {
 	float HP = 100;
 	int statusplayer = 1;
 	MAP map(&indexMap);
+	map.setpointergamepause(&gamepause);
 	Player player1;
+	player1.gamepause(&gamepause);
 	player1.setpointerstatusplayer(&statusplayer);
 	map.setpointerstatusplayer(&statusplayer);
 	map.setpointerhp(&HP);
 	endgame END;
+	
 	Bartop bartop;
 	
 	float posy; // player.position.y
@@ -67,7 +74,7 @@ int main() {
 	Menu menu;	
 	unsigned long main_score=0; // ************score********
 	int tempcolision = 0;
-	
+	END.setpointscore(&main_score);
 	Clock clock_runaway;
 	float totalrunaway = 0;
 	ITEM1.loadFromFile("Texture\\item\\testbear-01.png"); //////////////////////////////////
@@ -124,16 +131,22 @@ int main() {
 		player1.checkhole(map.checkonhole());
 		window.clear();
 		if (menu.check() == true) { // in game
-			if (player1.checkdie()) {//playerdie/////////////
+
+			if (Keyboard::isKeyPressed(Keyboard::Escape) && gamepause==false ) {
+				cout << "PRESSESC" << endl;
+				gamepause = true;
+			}
+
+			if (player1.checkdie() && END.getstatus() == false) {//playerdie/////////////
 				map.setdie(true);
 				END.setstatus(true);
-				//endgame-> 0 1
+				//endgame-> 0 1 
 			}
 			
 			bartop.drawscore(&main_score);
 			totalrunaway += clock_runaway.restart().asSeconds();
 			
-			if (totalrunaway > 0.01 && END.getstatus()==false) {
+			if (totalrunaway > 0.01 && END.getstatus()==false&&gamepause==false) {
 				totalrunaway = 0;
 				HP -= 0.01;     ///////////////// เลือดลด
 				main_score++;                  //////////// score + alltime
@@ -162,7 +175,7 @@ int main() {
 			}
 
 			// start stop step
-			if (END.getstatus() == false)
+			if (END.getstatus() == false&&gamepause==false)
 			{
 				
 				for (it = item1.begin(); it != item1.end(); ++it)
@@ -231,7 +244,16 @@ int main() {
 			if (bool_big == true) {
 				player1.setBig();
 			}
+			if (gamepause == true&&END.getstatus()==false) {
+				pausepage.draw(&window);
+				if (pausepage.checkclickforward() == true) {
+					pausepage.reset();
+					END.setstatus(true);
+					// gamepause = false;
+				}
+			}
 			if (END.getstatus()==true){
+				
 				END.draw(&window);
 				if (END.ismenustart() == true) {
 					menu.setstart();
@@ -239,6 +261,7 @@ int main() {
 					player1.reset();
 					map.reset();
 					main_score = 0;
+					gamepause = false;
 				}
 			}
 		}

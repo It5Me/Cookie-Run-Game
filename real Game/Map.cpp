@@ -82,9 +82,9 @@ void MAP::DRAW(RenderWindow* window)
 	case 0:
 		//cout << int(fabs(this->spri_floorforest.getPosition().x)) << endl;
 		if (this->spri_floorforest.getPosition().x > 0) {
-			window->draw(spri_mapice);
+			window->draw(spri_mapdesert);
 			window->draw(spri_mapforest);
-			window->draw(spri_floorice);
+			window->draw(spri_floordesert);
 			window->draw(spri_floorforest);
 			//cout << " ddfgkg" << endl;
 		}
@@ -93,7 +93,7 @@ void MAP::DRAW(RenderWindow* window)
 			if (int(fabs(this->spri_floorforest.getPosition().x)) + 1600 == 12200)
 			{
 				this->indexhole = 0;
-				cout << "LOADMAP1" << endl;
+			//	cout << "LOADMAP1" << endl;
 				*this->indexMap = 1;
 				this->indexmap = *this->indexMap;
 				this->spri_mapfire.setPosition(0, 0);
@@ -105,7 +105,7 @@ void MAP::DRAW(RenderWindow* window)
 				}
 				this->obstacleList.clear();
 				for (int i = 0; i < 10; i++) {
-					cout << "SET" << endl;
+					// cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap2[i] - 1], positionobmap2[i], typeobmap2[i]));
 				}
 			}
@@ -126,7 +126,7 @@ void MAP::DRAW(RenderWindow* window)
 			if (int(fabs(this->spri_floorfire.getPosition().x)) + 1600 == 12200)
 			{
 				this->indexhole = 0;
-				cout << "LOADMAP2" << endl;
+				//cout << "LOADMAP2" << endl;
 				*this->indexMap = 2;
 				this->indexmap = *this->indexMap;
 				this->spri_mapice.setPosition(0, 0);
@@ -138,7 +138,7 @@ void MAP::DRAW(RenderWindow* window)
 				}
 				this->obstacleList.clear();
 				for (int i = 0; i < 10; i++) {
-					cout << "SET" << endl;
+				//	cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap3[i] - 1], positionobmap3[i], typeobmap3[i]));
 				}
 			}
@@ -158,7 +158,7 @@ void MAP::DRAW(RenderWindow* window)
 			if (int(fabs(this->spri_floorice.getPosition().x)) + 1600 == 12200)
 			{
 				this->indexhole = 0;
-				cout << "LOADMAP" << endl;
+				//cout << "LOADMAP" << endl;
 				*this->indexMap = 3;
 				this->indexmap = *this->indexMap;
 				this->spri_mapdesert.setPosition(0, 0);
@@ -170,8 +170,8 @@ void MAP::DRAW(RenderWindow* window)
 				}
 				this->obstacleList.clear();
 				for (int i = 0; i < 10; i++) {
-					cout << "SET" << endl;
-					obstacleList.push_back(new Obstacle(objecttexture[indexobmap3[i] - 1], positionobmap3[i], typeobmap3[i]));
+					//cout << "SET" << endl;
+					obstacleList.push_back(new Obstacle(objecttexture[indexobmap4[i] - 1], positionobmap4[i], typeobmap4[i]));
 				}
 			}
 			window->draw(spri_mapice);
@@ -184,14 +184,15 @@ void MAP::DRAW(RenderWindow* window)
 			
 			window->draw(spri_mapice);
 			window->draw(spri_mapdesert);
-			window->draw(spri_floordesert);
 			window->draw(spri_floorice);
+			window->draw(spri_floordesert);
+			
 		}
 		else {
 			if (int(fabs(this->spri_floordesert.getPosition().x)) + 1600 == 12200)
 			{
 				this->indexhole = 0;
-				cout << "LOADMAP" << endl;
+				//cout << "LOADMAP" << endl;
 				*this->indexMap = 0;
 				this->indexmap = *this->indexMap;
 				this->spri_mapforest.setPosition(0, 0);
@@ -203,7 +204,7 @@ void MAP::DRAW(RenderWindow* window)
 				}
 				this->obstacleList.clear();
 				for (int i = 0; i < 10; i++) {
-					cout << "SET" << endl;
+				//	cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i], typeobmap1[i]));
 				}
 			}
@@ -215,13 +216,13 @@ void MAP::DRAW(RenderWindow* window)
 	}
 	for (int i = 0; i < obstacleList.size(); i++) {
 		this->obstacleList[i]->draw(window);
-		if ( *this->statusplayer==1 &&abs(321 - this->obstacleList[i]->getposition().x) < this->obstacleList[i]->gethalfsize().x*0.8 + 121 * 0.8 &&
-			abs(*y+121 - this->obstacleList[i]->getposition().y) < this->obstacleList[i]->gethalfsize().y * 0.8 + 121 * 0.8) {
+		if ( *this->statusplayer==1 &&abs(321 - this->obstacleList[i]->getposition().x) < this->obstacleList[i]->gethalfsize().x*0.6 + 121 * 0.6 &&
+			abs(*y+121 - this->obstacleList[i]->getposition().y) < this->obstacleList[i]->gethalfsize().y * 0.6 + 121 * 0.6) {
 			//cout << "CHECKKKK" << endl;
 			*this->hpplayer -= 5;
 			*this->statusplayer = 2;
 		}
-		if (this->die == false) {
+		if (this->die == false && *this->gamepause==false) {
 			this->obstacleList[i]->move();
 		}
 		/*if (this->obstacleList[i]->isDelete()) {
@@ -291,7 +292,7 @@ bool MAP::checkHole()
 			this->b_onhole = false;
 		}
 		if (this->indexmap==0&&fabs(this->spri_floorforest.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
-			cout << this->indexhole << " <-- UP index1" << endl;
+			//cout << this->indexhole << " <-- UP index1" << endl;
 			this->indexhole++;
 			
 		}
@@ -313,7 +314,7 @@ bool MAP::checkHole()
 		}
 		//cout << fabs(this->spri_floorfire.getPosition().x + 300) << endl;
 		if (this->indexmap == 1 &&fabs(this->spri_floorfire.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
-			cout << this->indexhole << " <-- UP index2 :: " << this->indexmap << " <--indexMap" << endl;
+			//cout << this->indexhole << " <-- UP index2 :: " << this->indexmap << " <--indexMap" << endl;
 			this->indexhole++;
 			
 		}
@@ -334,7 +335,7 @@ bool MAP::checkHole()
 		}
 		if (this->indexmap == 2 && fabs(this->spri_floorice.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
 			
-			cout << this->indexhole << " <-- UP index3" << endl;
+			//cout << this->indexhole << " <-- UP index3" << endl;
 			this->indexhole++;
 		}
 		break;
@@ -354,7 +355,7 @@ bool MAP::checkHole()
 		}
 		if (this->indexmap == 3 && fabs(this->spri_floordesert.getPosition().x) + 300 > positionstart[this->indexmap][this->indexhole] + lengthhole[this->indexmap][this->indexhole]) {
 
-			cout << this->indexhole << " <-- UP index3" << endl;
+			//cout << this->indexhole << " <-- UP index3" << endl;
 			this->indexhole++;
 		}
 		break;
@@ -431,12 +432,17 @@ void MAP::setpointerstatusplayer(int* status)
 	this->statusplayer = status;
 }
 
+void MAP::setpointergamepause(bool* state)
+{
+	this->gamepause = state;
+}
+
 
 void MAP::setpositionmapall()
 {
 	for (int i = 0; i < 10; i++) {  ////
 		//cout << "SET" << endl;
-		obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i], typeobmap1[i]));
+		obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i]-1600, typeobmap1[i]));
 		//cout << indexobmap1[i] - 1 << " " << positionobmap1[i] << " " << typeobmap1[i] << endl;
 	}
 	this->spri_mapforest.setPosition(0, 0);
@@ -454,7 +460,7 @@ void MAP::setpositionmapall()
 void MAP::MOVE()
 {
 	//cout << " " << map1.getPosition().x << endl;
-	if (this->die == false)
+	if (this->die == false && *this->gamepause==false)
 	switch (*this->indexMap)
 	{
 	case 0:

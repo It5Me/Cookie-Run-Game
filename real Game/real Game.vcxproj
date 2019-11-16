@@ -133,6 +133,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Obstacle.cpp" />
+    <ClCompile Include="Pausepage.cpp" />
     <ClCompile Include="Pet.cpp" />
     <ClCompile Include="Playback.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Obstacle.h" />
+    <ClInclude Include="Pausepage.h" />
     <ClInclude Include="Pet.h" />
     <ClInclude Include="Playback.h" />
     <ClInclude Include="Player.h" />

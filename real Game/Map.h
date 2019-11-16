@@ -16,12 +16,14 @@ public:
 	void setdie(bool state);
 	void setpointerhp(float* hp);
 	void setpointerstatusplayer(int *status);
+	void setpointergamepause(bool* state);
 private:
 	
 	//sound
 	
 
 	//
+	bool* gamepause;
 
 	int *statusplayer;
 	float *hpplayer;

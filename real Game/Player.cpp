@@ -32,7 +32,7 @@ void Player::DRAW(RenderWindow* window)
 		if (this->timeplayer >= 0.2) {
 			this->timeplayer = 0;
 			this->countdraw++;
-			cout << countdraw << endl;
+			//cout << countdraw << endl;////////////////////////////////// กระพริบ
 		}
 		if (this->countdraw % 2 == 0) {
 			window->draw(this->body);
@@ -113,6 +113,11 @@ void Player::setpointerstatusplayer(int* status)
 	this->status = status;
 }
 
+void Player::gamepause(bool* state)
+{
+	this->Gamepause = state;
+}
+
 void Player::statusplayer()
 {
 	switch (*this->status)
@@ -164,7 +169,7 @@ void Player::update(int row)
 
 void Player::control()
 {
-	
+	if (*this->Gamepause == false)
 	if (Keyboard::isKeyPressed(Keyboard::Space) && stateanimation!=3) { ////////////////// jump
 		jumpdelta += clockjump.restart().asSeconds();
 		if (this->statejump == 0) {
@@ -196,7 +201,7 @@ void Player::control()
 			//this->die = true;
 		
 			*this->status = 0;
-			cout << "DIE" << endl;
+			//cout << "DIE" << endl;
 		}
 	}
 	else if(statejump==0){
@@ -211,7 +216,7 @@ void Player::control()
 		}
 		if (this->body.getPosition().y > 800) {
 			*this->status = 0;
-			cout << "DIE" << endl;
+		//	cout << "DIE" << endl;
 		}
 		
 		//cout << *this->y << endl;

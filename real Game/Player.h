@@ -13,7 +13,9 @@ public:
 	void checkhole(bool state);
 	bool checkdie();
 	void setpointerstatusplayer(int* status);
+	void gamepause(bool* state);
 private:
+	bool* Gamepause;
 	Clock clockplayer;
 	float timeplayer = 0;
 	int countdraw=0;
