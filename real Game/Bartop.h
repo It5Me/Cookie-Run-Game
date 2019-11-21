@@ -7,7 +7,9 @@ public:
 	void update_hp(float hp);
 	void pair(bool* P);
 	void drawscore(unsigned long *P);
+	void setimmortal(bool state);
 private:
+
 	Font font;
 	Text text_score;
 	Texture texture_immortal[7];
@@ -16,7 +18,7 @@ private:
 	Sprite spri_BGimmortal;
 	Texture texture_bgblood;
 	Sprite spri_bgblood;
-	Texture texture_blood;
+	Texture texture_blood[2];
 	Sprite spri_blood;
 	Texture texture_heart;
 	Sprite spri_heart;

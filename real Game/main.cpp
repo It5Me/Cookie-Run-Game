@@ -2,7 +2,6 @@
 #include"Playback.h"
 #include"Map.h"
 #include"Player.h"
-#include"Items.h"
 #include"Menu.h"
 #include "Pet.h"
 #include"Bartop.h"	
@@ -46,15 +45,17 @@ int main() {
 	player1.setpointerstatusplayer(&statusplayer);
 	map.setpointerstatusplayer(&statusplayer);
 	map.setpointerhp(&HP);
-	endgame END;
+	endgame END(&event);
 	
 	Bartop bartop;
 	
-	float posy; // player.position.y
+	//float posy; // player.position.y
 	//cout << "main Address :" << &posy << endl;
-	
-	player1.getposplayer(&posy);
-	map.sendposplayer(&posy);
+	Vector2f positionplayer;
+	//player1.getposplayer(&posy);
+	//map.sendposplayer(&posy);
+	player1.setpointerpositionplayer(&positionplayer);
+	map.setpointerpositionplayer(&positionplayer);
 	Texture ITEM1;
 	Texture ITEM2;
 	Texture ITEM3; // test object
@@ -73,6 +74,7 @@ int main() {
 	bartop.pair(bool_immortal);
 	Menu menu;	
 	unsigned long main_score=0; // ************score********
+	map.main_score = &main_score;
 	int tempcolision = 0;
 	END.setpointscore(&main_score);
 	Clock clock_runaway;
@@ -91,7 +93,7 @@ int main() {
 	float totalSpawn = 0.0;
 	Items* temp;
 	float j = 20;
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		//cout << 590.0 - abs(sin(j) * 100) << endl;
 		if (i % 3 == 0) {
@@ -110,7 +112,7 @@ int main() {
 	item1.push_back(*temp);
 	int tempi = 8;
 	//Items item2(ITEM1, 100,9,Vector2f(1500.0f,500.0f));
-
+	*/
 	///////////////////////TESTJAAAAAAA
 	
 
@@ -165,14 +167,14 @@ int main() {
 				//cout << "sdsdsdsd" << endl;
 				
 			}
-			if (map.checkSpwan())
+			/*if (map.checkSpwan())
 			{
 
 				temp = new Items(ITEM1, 123, 4, Vector2f(1000.0 + (tempi * 100), 590.0 - abs(sin(j / 2) * 250)), ID_testbear);
 				item1.push_back(*temp);
 				j = (j < 0 ? 0 : j - 0.5);
 				//cout << "Add" << endl;
-			}
+			}*/
 
 			// start stop step
 			if (END.getstatus() == false&&gamepause==false)
@@ -262,6 +264,7 @@ int main() {
 					map.reset();
 					main_score = 0;
 					gamepause = false;
+					menu.loadfile();
 				}
 			}
 		}

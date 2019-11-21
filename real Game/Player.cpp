@@ -18,7 +18,8 @@ Player::Player()
 
 void Player::DRAW(RenderWindow* window)
 {
-	*this->y = body.getPosition().y;
+	*this->positionplayer = body.getPosition()+Vector2f(this->womenTexture.getSize().x/10/2, this->womenTexture.getSize().y /10/ 2);
+	//*this->y = body.getPosition().y;
 	jump();
 	if (*this->status != 0)control();
 	else {
@@ -84,12 +85,7 @@ void Player::setBig()
 	//this->body.setScale(1.5, 1.5);
 }
 
-void Player::getposplayer(float* Y)
-{
-	this->y = Y;
-	//cout << "Player Address Y par:" << Y << endl;
-	//cout << "Player Address Y in class:" << this->y << endl;
-}
+
 
 void Player::reset()
 {
@@ -111,6 +107,11 @@ bool Player::checkdie()
 void Player::setpointerstatusplayer(int* status)
 {
 	this->status = status;
+}
+
+void Player::setpointerpositionplayer(Vector2f* pos)
+{
+	this->positionplayer = pos;
 }
 
 void Player::gamepause(bool* state)

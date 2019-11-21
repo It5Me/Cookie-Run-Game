@@ -103,11 +103,25 @@ void Menu::loadfile()
 {
 	string t;
 	int i = 0;
+	bool sta = false;
 	this->myfile.open("database\\score.txt",ios::in);
+	string temp;
 	while (!this->myfile.eof()) {
 		getline(this->myfile,t);
-		cout << t << endl;
-		this->text[i++].setString(t);
+		if (sta == false) {
+			temp = t;
+			//this->text[i].setString(t);
+		}
+		else
+		{
+			temp += " - ";
+			temp += t;
+			this->text[i++].setString(temp);
+			temp.clear();
+		}
+		sta = !sta;
+		//cout << t << endl;
+		
 		if (i == 5) {
 			break;
 		}

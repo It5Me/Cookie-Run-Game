@@ -1,5 +1,5 @@
 ﻿#include "Map.h"
-
+#include"Positionitem.h"
 #include"positionhole.h"
 
 MAP::MAP(int* P)
@@ -13,6 +13,16 @@ MAP::MAP(int* P)
 	this->texture_floorice.loadFromFile("Texture/map1/floorice.png");
 	this->texture_floorforest.loadFromFile("Texture/map1/floorforest.png");
 	this->texture_floordesert.loadFromFile("Texture/map1/floordesert.png");	
+	this->bear[0].loadFromFile("Texture/bear/bearblue.png");
+	this->bear[1].loadFromFile("Texture/bear/bearbrown.png");
+	this->bear[2].loadFromFile("Texture/bear/bearpink.png");
+	this->bear[3].loadFromFile("Texture/bear/bearyellow.png");
+	this->bear[4].loadFromFile("Texture/bear/bearblue2.png");
+	this->bear[5].loadFromFile("Texture/bear/bearbrown2.png");
+	this->bear[6].loadFromFile("Texture/bear/bearpink2.png");
+	this->bear[7].loadFromFile("Texture/bear/bearyellow2.png");
+	this->bear[8].loadFromFile("Texture/bear/bearextra.png");
+
 	this->spri_mapfire.setTexture(this->texture_mapfire);
 	this->spri_mapice.setTexture(this->texture_mapice);
 	this->spri_mapforest.setTexture(this->texture_mapforest);
@@ -72,6 +82,7 @@ MAP::MAP(int* P)
 void MAP::DRAW(RenderWindow* window)
 {
 
+	checkcolisionheart();
 	//cout << *this->y << endl;
 	checkHole();
 	
@@ -81,7 +92,7 @@ void MAP::DRAW(RenderWindow* window)
 	{
 	case 0:
 		//cout << int(fabs(this->spri_floorforest.getPosition().x)) << endl;
-		if (this->spri_floorforest.getPosition().x > 0) {
+		if (this->spri_floorforest.getPosition().x > 0) {      
 			window->draw(spri_mapdesert);
 			window->draw(spri_mapforest);
 			window->draw(spri_floordesert);
@@ -90,8 +101,13 @@ void MAP::DRAW(RenderWindow* window)
 		}
 		else
 		{
+			if (int(fabs(this->spri_floorforest.getPosition().x)) + 1600 == 12200 - 800) {
+				Heart.setposition(Vector2f(1900, 500));
+			}
 			if (int(fabs(this->spri_floorforest.getPosition().x)) + 1600 == 12200)
 			{
+				this->addBear(1); // โหลดหมีของแมพ ต่อมา
+				cout << "LOADHEART" << endl;
 				this->indexhole = 0;
 			//	cout << "LOADMAP1" << endl;
 				*this->indexMap = 1;
@@ -123,8 +139,12 @@ void MAP::DRAW(RenderWindow* window)
 			//cout << "sal" << endl;
 		}
 		else {
+			if (int(fabs(this->spri_floorfire.getPosition().x)) + 1600 == 12200 - 800) {
+				Heart.setposition(Vector2f(1900, 500));
+			}
 			if (int(fabs(this->spri_floorfire.getPosition().x)) + 1600 == 12200)
 			{
+				this->addBear(2); // <-------- load bear
 				this->indexhole = 0;
 				//cout << "LOADMAP2" << endl;
 				*this->indexMap = 2;
@@ -155,8 +175,13 @@ void MAP::DRAW(RenderWindow* window)
 			window->draw(spri_floorfire);
 		}
 		else {
+			if (int(fabs(this->spri_floorice.getPosition().x)) + 1600 == 12200 - 800) {
+				Heart.setposition(Vector2f(1900, 500));
+			}
 			if (int(fabs(this->spri_floorice.getPosition().x)) + 1600 == 12200)
 			{
+				this->addBear(3); // <---- Call function 
+
 				this->indexhole = 0;
 				//cout << "LOADMAP" << endl;
 				*this->indexMap = 3;
@@ -189,6 +214,9 @@ void MAP::DRAW(RenderWindow* window)
 			
 		}
 		else {
+			if (int(fabs(this->spri_floordesert.getPosition().x)) + 1600 == 12200 - 800) {
+				Heart.setposition(Vector2f(1900, 500));
+			}
 			if (int(fabs(this->spri_floordesert.getPosition().x)) + 1600 == 12200)
 			{
 				this->indexhole = 0;
@@ -214,12 +242,12 @@ void MAP::DRAW(RenderWindow* window)
 		break;
 		
 	}
-	for (int i = 0; i < obstacleList.size(); i++) {
+	for (int i = 0; i < obstacleList.size(); i++) { ///////////////ตรวจสอบการชนกับวัตถุ
 		this->obstacleList[i]->draw(window);
-		if ( *this->statusplayer==1 &&abs(321 - this->obstacleList[i]->getposition().x) < this->obstacleList[i]->gethalfsize().x*0.6 + 121 * 0.6 &&
-			abs(*y+121 - this->obstacleList[i]->getposition().y) < this->obstacleList[i]->gethalfsize().y * 0.6 + 121 * 0.6) {
+		if ( *this->statusplayer==1 &&abs((*positionplayer).x - this->obstacleList[i]->getposition().x) < this->obstacleList[i]->gethalfsize().x*0.6 + 121 * 0.6 &&
+			abs((*positionplayer).y - this->obstacleList[i]->getposition().y) < this->obstacleList[i]->gethalfsize().y * 0.8 + 121 * 0.8) {
 			//cout << "CHECKKKK" << endl;
-			*this->hpplayer -= 5;
+			*this->hpplayer -= 10;
 			*this->statusplayer = 2;
 		}
 		if (this->die == false && *this->gamepause==false) {
@@ -234,6 +262,14 @@ void MAP::DRAW(RenderWindow* window)
 		}*/
 		//cout << "DRAW" << endl;
 	}
+	for (int i = 0; i < this->itemlist.size(); i++) {
+		this->itemlist[i]->DRAW(window);
+		if (fabs((*positionplayer).x - this->itemlist[i]->getposition().x) < this->itemlist[i]->gethalfsize().x * 0.6 + 121 * 0.6 &&
+			fabs((*positionplayer).y - this->itemlist[i]->getposition().y) < this->itemlist[i]->gethalfsize().y * 0.6 + 121 * 0.6) {
+			this->itemlist[i]->hide();
+			*main_score += this->itemlist[i]->getscore();
+		}
+	}
 	if (this->die == false)
 	{
 		/*for (int i = 0; i < 3; i++) {
@@ -245,6 +281,7 @@ void MAP::DRAW(RenderWindow* window)
 	}
 
 	//window->draw(this->hole);
+	Heart.draw(window);
 
 }
 
@@ -365,13 +402,6 @@ bool MAP::checkHole()
 
 }
 
-void MAP::sendposplayer(float* Y)
-{
-	this->y = Y;
-	//cout << "Map Address Y par:" << Y << endl;
-	//cout << "Map Address Y in class:" << this->y << endl;
-	
-}
 
  
 
@@ -382,12 +412,19 @@ void MAP::reset()///////////////////////////////////////////////////
 		delete P;
 		//this->obstacleList.erase(this->obstacleList.begin() + i);
 	}
+	for (int i = 0; i < this->itemlist.size(); i++) {
+		Items* P = this->itemlist[i];
+		delete P;
+		//this->obstacleList.erase(this->obstacleList.begin() + i);
+	}
+	this->itemlist.clear();
 	this->obstacleList.clear();
 	this->die = false;
 	setpositionmapall();
 	*this->indexMap = 0;
 	this->indexhole = 0;
 	this->indexmap = 0;
+	*this->hpplayer = 100;
 	//เดี๋ยวมาลบนา้จ้า้าาาาาาา
 	//this->hole.setSize(Vector2f(400, 200));
 	//this->hole.setPosition(1200, 700);
@@ -437,9 +474,177 @@ void MAP::setpointergamepause(bool* state)
 	this->gamepause = state;
 }
 
+void MAP::setpointerpositionplayer(Vector2f* pos)
+{
+	
+	this->positionplayer = pos;
+
+}
+
+void MAP::addBear(int indexMap)
+{
+	switch (indexMap)
+	{
+	case 0: // map1
+		for (int i = 0; i < 75; i++) {
+			if (type1[i] != -1) {
+				switch (type1[i])
+				{
+				case 0: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;													/// กำหนดช่วงคะแนนของแต่ละหมีด้วย
+				case 1: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				case 2: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				case 3: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				case 4: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				case 5: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				case 6: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				case 7: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				case 8: this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+					break;
+				}
+
+			}
+		}
+		break;
+	case 1: // Map 2
+		for (int i = 0; i < 50; i++) {
+			if (type1[i] != -1) {
+				switch (type1[i])
+				{
+				case 0: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;													/// กำหนดช่วงคะแนนของแต่ละหมีด้วย
+				case 1: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				case 2: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				case 3: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				case 4: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				case 5: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				case 6: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				case 7: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				case 8: this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 200, 4, itemposition2[i], type2[i]));
+					break;
+				}
+
+			}
+		}
+		break;
+	case 2: // Map 3
+		for (int i = 0; i < 50; i++) {
+			if (type1[i] != -1) {
+				switch (type1[i])
+				{
+				case 0: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;													 // score
+				case 1: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				case 2: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				case 3: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				case 4: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				case 5: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				case 6: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				case 7: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				case 8: this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 200, 4, itemposition3[i], type3[i]));
+					break;
+				}
+
+			}
+		}
+		break;
+	case 3: // Map 4
+		for (int i = 0; i < 50; i++) {
+			if (type1[i] != -1) {
+				switch (type1[i])
+				{
+				case 0: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;													/// score
+				case 1: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				case 2: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				case 3: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				case 4: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				case 5: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				case 6: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				case 7: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				case 8: this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 200, 4, itemposition4[i], type4[i]));
+					break;
+				}
+
+			}
+		}
+		break;
+	}
+}
+
+
+void MAP::checkcolisionheart()
+{
+	//cout << (*positionplayer).x << endl;
+	if (Heart.getstatus()&&
+		fabs((*positionplayer).x - Heart.getposition().x) < Heart.gethalfsize().x * 0.6 + 121 * 0.6 &&
+		fabs((*positionplayer).y - Heart.getposition().y) < Heart.gethalfsize().y * 0.6 + 121 * 0.6) {
+		//cout << "CHONNN" << endl;
+		this->Heart.setposition(Vector2f(-500, 0));
+		*this->hpplayer += 20;
+	}
+}
 
 void MAP::setpositionmapall()
 {
+	srand(time(NULL));
+
+	this->addBear(0); // call function for map 1 
+
+	/*for (int i = 0; i < 50; i++) {
+		if (type1[i] != -1) {
+			switch (type1[i])
+			{
+			case 0 : this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;													/// กำหนดช่วงคะแนนของแต่ละหมีด้วย
+			case 1: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			case 2: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			case 3: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			case 4: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			case 5: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			case 6: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			case 7: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			case 8: this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 200, 4, itemposition1[i], type1[i]));
+				break;
+			}
+			
+		}
+	}*/
 	for (int i = 0; i < 10; i++) {  ////
 		//cout << "SET" << endl;
 		obstacleList.push_back(new Obstacle(objecttexture[indexobmap1[i] - 1], positionobmap1[i]-1600, typeobmap1[i]));

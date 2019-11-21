@@ -12,19 +12,19 @@ int lengthhole[4][4]  = {
 	{800,900,900,0}
 };
 
-int positionobmap1[10] = { 1500+1600,3200 + 1600,4500 + 1600,5900 + 1600,6500 + 1600,7000 + 1600,7700 + 1600,8000 + 1600,8900 + 1600,10500 + 1600,};
-int indexobmap1[10] = { 1,17,1,16,17,17,10,14,17,14};
-int typeobmap1[10] = { DOWN,DOWNMOVE ,DOWN ,DOWN ,TOP ,DOWNMOVE ,TOP ,DOWN ,DOWN,DOWN };
+int positionobmap1[10] = { 1500+1600,3200 + 1600,4500 + 1600,5900 + 1600,6500 + 1600,7000 + 1600,7700 + 1600,8000 + 10600,8900 + 1600,10500 + 1600,};
+int indexobmap1[10] = {10,5,19,5,10,21,19,5,5,18};
+int typeobmap1[10] = { TOPMOVE,DOWNMOVE ,DOWN ,DOWN ,TOPMOVE ,TOPMOVE ,DOWNMOVE,DOWN ,DOWNMOVE,DOWN };
 
-int positionobmap2[10] = { 3600,4100,5000,5500,6000,6700,7700,8700,9700,11700 };
-int indexobmap2[10] = { 4,4,5,3,5,5,13,4,4,1};
-int typeobmap2[10] = { DOWN,TOPMOVE ,DOWN ,TOPMOVE ,TOPMOVE ,DOWN ,DOWN ,DOWN,DOWN,DOWN  };
+int positionobmap2[10] = { 3600,4100,5300,6000,6700,8000,9000,9800,10000,12200 };
+int indexobmap2[10] = { 6,8,5,3,5,5,13,8,8,1};
+int typeobmap2[10] = { DOWN,TOPMOVE ,DOWN ,DOWN ,DOWN ,DOWN ,DOWN ,TOPMOVE,TOPMOVE,DOWN };
 
-int positionobmap3[10] = { 3600,4100,5000,5500,6000,6700,7700,8700,9700,11100 };
-int indexobmap3[10] = { 14,14,14,14,14,14,5,5,11,12};
-int typeobmap3[10] = { DOWN,DOWN ,DOWN ,DOWN ,DOWN ,DOWN ,DOWN ,DOWN,TOP,TOP  };
+int positionobmap3[10] = { 3500,4180,5000,5300,6000,6200,7800,8700,9700,12100 };
+int indexobmap3[10] = { 12,12,12,2,9,9,12,2,9,9};
+int typeobmap3[10] = { DOWN,DOWN ,DOWN ,DOWN ,TOPMOVE ,TOPMOVE ,DOWN ,DOWNMOVE,TOP,TOPMOVE  };
 
-int positionobmap4[10] = { 2800,3600,4000,5500,6000,6700,7700,8700,9700,11100 };
-int indexobmap4[10] = { 14,14,14,14,14,14,14,14,14,14 };
+int positionobmap4[10] = { 2800,3600,4000,5500,6000,6700,7700,9200,9700,11100 };
+int indexobmap4[10] = { 14,14,14,14,14,14,14,7,14,14 };
 int typeobmap4[10] = { DOWN,DOWN ,DOWN ,DOWN ,DOWN ,DOWN ,DOWN ,DOWN,TOP,TOP };
 						

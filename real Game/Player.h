@@ -8,13 +8,15 @@ public:
 	Vector2f gethalfsize();
 	void selectcharacter(int index);
 	void setBig();
-	void getposplayer(float *Y);
+	//void getposplayer(float *Y);
 	void reset();
 	void checkhole(bool state);
 	bool checkdie();
 	void setpointerstatusplayer(int* status);
+	void setpointerpositionplayer(Vector2f *pos);
 	void gamepause(bool* state);
 private:
+	Vector2f* positionplayer;
 	bool* Gamepause;
 	Clock clockplayer;
 	float timeplayer = 0;
@@ -23,7 +25,7 @@ private:
 	void statusplayer();
 	bool onhole=false;
 	//bool die=false;
-	float* y;
+	//float* y;
 	Sprite body;
 	Texture manTexture;
 	Texture womenTexture;

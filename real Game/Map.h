@@ -1,6 +1,11 @@
 
 #include"Obstacle.h"
 #include"AllInOne.h"
+#include"heart.h"
+#include"Items.h"
+
+#include<stdlib.h>
+#include<time.h>
 
 
 class MAP
@@ -10,28 +15,35 @@ public:
 	void DRAW(RenderWindow* window);
 	bool checkSpwan();
 	bool checkHole();
-	void sendposplayer(float *Y);
+	//void sendposplayer(float *Y);
 	void reset();
 	bool checkonhole();
 	void setdie(bool state);
 	void setpointerhp(float* hp);
 	void setpointerstatusplayer(int *status);
 	void setpointergamepause(bool* state);
+	void setpointerpositionplayer(Vector2f* pos);
+
+	unsigned long* main_score;
 private:
+
+	void addBear(int indexMap);
+
+	vector<Items*>itemlist;
 	
 	//sound
-	
-
-	//
+	Texture bear[9];
+	Vector2f* positionplayer;
 	bool* gamepause;
-
+	heart Heart;
+	void checkcolisionheart();
 	int *statusplayer;
 	float *hpplayer;
 	Texture objecttexture[21]; /// << ----
 	vector <Obstacle*> obstacleList;
 	bool b_onhole = false;
 	bool die = false;
-	float* y;
+	//float* y;
 	RectangleShape hole;
 	void setpositionmapall();
 	int* indexMap;

@@ -11,13 +11,13 @@ Obstacle::Obstacle(Texture texture, float x, int type)
 	switch (this->type)
 	{
 	case 1:this->spribody.setOrigin(this->texturebody.getSize().x / 2, 0); // 
-		this->spribody.setPosition(x, 0);
+		this->spribody.setPosition(x, -1100);
 		break;
 	case 2:this->spribody.setOrigin(this->texturebody.getSize().x / 2, 0);
 		this->spribody.setPosition(x, 0);
 		break;
 	case 3:this->spribody.setOrigin(this->texturebody.getSize().x / 2, this->texturebody.getSize().y);
-		this->spribody.setPosition(x, 1100);
+		this->spribody.setPosition(x, 1400);
 		break;
 	case 4:this->spribody.setOrigin(this->texturebody.getSize().x / 2, this->texturebody.getSize().y);
 		this->spribody.setPosition(x, 740);
@@ -50,9 +50,14 @@ void Obstacle::move()
 		break;
 
 	case 1:
-		if (this->spribody.getPosition().x < 1400) {           // พุ่งลง
-			if (this->spribody.getPosition().y < 200) {
-				this->spribody.move(-8, 150);
+		if (this->spribody.getPosition().x < 1400) {           // movedown
+			if (this->spribody.getPosition().y < 150) {
+				for (int i = 0; i < 1500; i++) {
+					if (this->spribody.getPosition().y > 150) {
+						break;
+					}
+					this->spribody.move(-8 / 1500, 0.1);
+				}
 				//cout << "b" << endl;
 			}
 			else {
@@ -70,7 +75,7 @@ void Obstacle::move()
 
 	case 3:
 		if (this->spribody.getPosition().x < 1400) {
-			if (this->spribody.getPosition().y >= 740) {
+			if (this->spribody.getPosition().y >= 740) { ////////////////////////moveon
 				this->spribody.move(-8, -20);
 			}
 			else {
