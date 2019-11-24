@@ -119,6 +119,11 @@ void Player::gamepause(bool* state)
 	this->Gamepause = state;
 }
 
+void Player::setPointerIM(bool* im)
+{
+	this->im = im;
+}
+
 void Player::statusplayer()
 {
 	switch (*this->status)
@@ -135,7 +140,7 @@ void Player::statusplayer()
 		break;
 	case 3:
 		break;
-		//ตัวฝหญ่
+		//อมตะ
 	}
 }
 
@@ -191,7 +196,7 @@ void Player::control()
 		this->stateanimation = 3;
 		this->body.setScale(0.9f,1.0f);
 		
-		if (this->onhole == true && *this->status==1) {
+		if (this->onhole == true && *this->status==1&& *this->im==false) {
 			this->body.move(0, 14);
 		}
 		else
@@ -212,7 +217,7 @@ void Player::control()
 		if (this->status != 0 && this->onhole==false) {
 			this->body.setPosition(200.0f, 490.0f);
 		}
-		else if (this->onhole == true && *this->status==1){
+		else if (this->onhole == true && *this->status==1 && *this->im == false){
 			this->body.move(0, 15); //// สั่งให้ตก แต่ว่าไม่ได้
 		}
 		if (this->body.getPosition().y > 800) {
@@ -237,7 +242,7 @@ void Player::jump()
 	else if (this->statejump == 2) {
 		this->body.setPosition(this->body.getPosition().x, this->body.getPosition().y +	 this->A);
 		A += 0.3;
-		if (this->onhole==true && *this->status==1) {
+		if (this->onhole==true && *this->status==1 && *this->im == false) {
 			//cout << "ONHOLE" << endl;
 			if (this->body.getPosition().y > 800) {
 				//this->body.setPosition(200.0f, 490.0f);

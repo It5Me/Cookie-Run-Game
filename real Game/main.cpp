@@ -23,6 +23,16 @@ int collis(Player* P, Items* I)
 	}
 	return -1;
 }
+
+
+bool bool_immortal[8] = { 0,0,0,0,0,0,0,0 };
+
+bool checkIM(){
+
+	return bool_immortal[0] && bool_immortal[1] && bool_immortal[2] && bool_immortal[3] &&
+		bool_immortal[4] && bool_immortal[5] && bool_immortal[6] && bool_immortal[7];
+}
+
 int main() {
 
 	
@@ -38,9 +48,15 @@ int main() {
 	int indexMap = 0;
 	float HP = 100;
 	int statusplayer = 1;
-	MAP map(&indexMap);
+	MAP map(&indexMap, bool_immortal);
+	
 	map.setpointergamepause(&gamepause);
 	Player player1;
+	bool im=0;
+	float totaltimeim = 0;
+	Clock clockim;
+	map.setpointerim(&im);
+	player1.setPointerIM(&im);
 	player1.gamepause(&gamepause);
 	player1.setpointerstatusplayer(&statusplayer);
 	map.setpointerstatusplayer(&statusplayer);
@@ -48,7 +64,7 @@ int main() {
 	endgame END(&event);
 	
 	Bartop bartop;
-	
+	//bartop.setimmortal(1);
 	//float posy; // player.position.y
 	//cout << "main Address :" << &posy << endl;
 	Vector2f positionplayer;
@@ -56,20 +72,10 @@ int main() {
 	//map.sendposplayer(&posy);
 	player1.setpointerpositionplayer(&positionplayer);
 	map.setpointerpositionplayer(&positionplayer);
-	Texture ITEM1;
-	Texture ITEM2;
-	Texture ITEM3; // test object
-	Texture immortal[8];
-	immortal[0].loadFromFile("Texture\\item\\font_I.png");
-	immortal[1].loadFromFile("Texture\\item\\font_M.png");
-	immortal[2].loadFromFile("Texture\\item\\font_M.png");
-	immortal[3].loadFromFile("Texture\\item\\font_O.png");
-	immortal[4].loadFromFile("Texture\\item\\font_R.png");
-	immortal[5].loadFromFile("Texture\\item\\font_T.png");
-	immortal[6].loadFromFile("Texture\\item\\font_A.png");
-	immortal[7].loadFromFile("Texture\\item\\font_L.png");
+	
+	
 	int index_immortal=0;
-	bool bool_immortal[8] = { 0,0,0,0,0,0,0,0 };
+	
 	bool bool_big = false;
 	bartop.pair(bool_immortal);
 	Menu menu;	
@@ -79,15 +85,16 @@ int main() {
 	END.setpointscore(&main_score);
 	Clock clock_runaway;
 	float totalrunaway = 0;
-	ITEM1.loadFromFile("Texture\\item\\testbear-01.png"); //////////////////////////////////
+	///ITEM1.loadFromFile("Texture\\item\\testbear-01.png"); //////////////////////////////////
 	//ITEM2.loadFromFile("Texture/item/objecttest.png");
 	//ITEM3.loadFromFile("Texture\\item\\objecttest.png");
 	
 	//cout << "EIEI" << endl;
-	
+	/*
 	vector<Items> item1;
 	vector<Items>::iterator it;
 	vector<Items>::iterator tempit;
+	*/
 	bool haveDel = false;
 	Clock clockSpawn;
 	float totalSpawn = 0.0;
@@ -180,7 +187,7 @@ int main() {
 			if (END.getstatus() == false&&gamepause==false)
 			{
 				
-				for (it = item1.begin(); it != item1.end(); ++it)
+				/*for (it = item1.begin(); it != item1.end(); ++it)
 				{
 					it->DRAW(&window);     //
 					//cout << player1.getposition().x << " " << player1.getposition().y << endl;
@@ -217,10 +224,6 @@ int main() {
 						case ID_l://cout << "L" << endl;
 							bool_immortal[ID_l] = true;
 							break;
-						case ID_BIG:
-							bool_big = true;
-							cout << "big" << endl;
-							break;
 
 						}
 						main_score += it->getscore(); // chon!!
@@ -228,6 +231,7 @@ int main() {
 						tempit = it;
 						//cout << "size item : " <<item1.size() << endl;
 						//cout << main_score << endl;
+
 					}
 					if (it->getposition().x < 0)
 					{
@@ -235,22 +239,48 @@ int main() {
 						tempit = it;
 						//cout << "Del" << endl;
 					}
-				}
+					}
+					*/
 			}
-			
+			/*
 			if (haveDel == true) // ต้องลบสักตัว
 			{
 				haveDel = false;
 				item1.erase(tempit);
 			}
-			if (bool_big == true) {
-				player1.setBig();
+			*/
+			
+			if (Keyboard::isKeyPressed(Keyboard::A) && checkIM() == true&&im==false && gamepause == false && END.getstatus() == false) {
+				im = true;
+				bartop.setimmortal(1); 
+				clockim.restart();
+				cout << "sett" << endl;
+				for (int i = 0; i < 8; i++) {
+					bool_immortal[i] = 0;
+				}
+				
+			}
+			
+			if (im == true)
+			{
+				totaltimeim += clockim.restart().asSeconds();
+				//cout << clockim.getElapsedTime().asSeconds() << endl;
+				//cout << totaltimeim << endl;s
+				//cout << totaltime << endl;
+				if (totaltimeim > 10) {
+					cout << "reset" << endl;
+					statusplayer = 2;
+					totaltimeim = 0;
+					im = false;
+					bartop.setimmortal(0);
+				}
 			}
 			if (gamepause == true&&END.getstatus()==false) {
 				pausepage.draw(&window);
 				if (pausepage.checkclickforward() == true) {
 					pausepage.reset();
 					END.setstatus(true);
+					bartop.setimmortal(0);
 					// gamepause = false;
 				}
 			}

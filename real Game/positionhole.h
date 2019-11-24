@@ -24,7 +24,7 @@ int positionobmap3[10] = { 3500,4180,5000,5300,6000,6200,7800,8700,9700,12100 };
 int indexobmap3[10] = { 12,12,12,2,9,9,12,2,9,9};
 int typeobmap3[10] = { DOWN,DOWN ,DOWN ,DOWN ,TOPMOVE ,TOPMOVE ,DOWN ,DOWNMOVE,TOP,TOPMOVE  };
 
-int positionobmap4[10] = { 2800,3600,4000,5500,6000,6700,7700,9200,9700,11100 };
-int indexobmap4[10] = { 14,14,14,14,14,14,14,7,14,14 };
-int typeobmap4[10] = { DOWN,DOWN ,DOWN ,DOWN ,DOWN ,DOWN ,DOWN ,DOWN,TOP,TOP };
+int positionobmap4[10] = { 2800,8000,4000,6000,6500,6700,7300,10500,11000,11700 };
+int indexobmap4[10] = { 14,14,14,16,13,16,21,10,14,14 };
+int typeobmap4[10] = { DOWN,DOWN ,DOWNMOVE ,TOPMOVE ,DOWN ,DOWN ,TOPMOVE ,TOPMOVE,DOWN,DOWN };
 						

@@ -14,8 +14,6 @@ using namespace sf;
 #define ID_t 5
 #define ID_a 6
 #define ID_l 7
-#define ID_testbear 8
-#define ID_BIG 9
 
 #define TOPMOVE 1
 #define TOP	2

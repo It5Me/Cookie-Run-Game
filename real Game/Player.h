@@ -15,7 +15,10 @@ public:
 	void setpointerstatusplayer(int* status);
 	void setpointerpositionplayer(Vector2f *pos);
 	void gamepause(bool* state);
+	void setPointerIM(bool* im) ;
 private:
+
+	bool* im;
 	Vector2f* positionplayer;
 	bool* Gamepause;
 	Clock clockplayer;

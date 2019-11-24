@@ -162,7 +162,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 			spri->setTexture(*ho);
 			//cout << "on hold" << endl;
 		}
-		if (Mouse::isButtonPressed(Mouse::Left) == true && this->click==false) {
+		if (Mouse::isButtonPressed(Mouse::Left) == true && this->click == false) {
 			this->click = true;
 			//cout << "click" << endl;
 			switch (index)
@@ -173,14 +173,15 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 				break;//animalleft
 			case 2:index_animal = (index_animal < 3 ? index_animal + 1 : index_animal);
 				break;//animalright
-			case 3:index_player = (index_player > 0 ? index_player -1  : index_player);
+			case 3:index_player = (index_player > 0 ? index_player - 1 : index_player);
 				break;//playerleft
 			case 4:index_player = (index_player < 1 ? index_player + 1 : index_player);
 				break;//playerright
 			}
 			this->showplayer.setTexture(this->texture_player[index_player]);
 			this->showanimal.setTexture(this->texture_animal[index_animal]);
-			
+
+
 			if (index_player == 1) {
 				this->showplayer.setScale(1.8f, 1.8f);
 				this->showplayer.setPosition(1084.3f, 207.0f);
