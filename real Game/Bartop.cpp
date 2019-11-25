@@ -94,7 +94,7 @@ void Bartop::drawscore(unsigned long* P)
 
 void Bartop::setimmortal(bool state)
 {
-	cout << "settttt" << " " << state <<endl;
+	//cout << "settttt" << " " << state <<endl;
 	if (state) {
 		this->spri_blood.setTexture(this->texture_blood[1]);
 	}

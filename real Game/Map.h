@@ -26,6 +26,7 @@ public:
 	unsigned long* main_score;
 	void setpointerim(bool*im);
 private:
+
 	bool* im;
 	int calcIM();
 

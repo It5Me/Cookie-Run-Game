@@ -209,6 +209,10 @@ void Player::control()
 			*this->status = 0;
 			//cout << "DIE" << endl;
 		}
+		if (this->select==1) {
+			this->body.setScale(0.7f, 0.75f);
+			this->body.setPosition(200.0f, 560.0f);
+		}
 	}
 	else if(statejump==0){
 		//cout << "do" << endl;

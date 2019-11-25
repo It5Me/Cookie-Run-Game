@@ -142,7 +142,7 @@ int main() {
 		if (menu.check() == true) { // in game
 
 			if (Keyboard::isKeyPressed(Keyboard::Escape) && gamepause==false ) {
-				cout << "PRESSESC" << endl;
+				//cout << "PRESSESC" << endl;
 				gamepause = true;
 			}
 
@@ -254,7 +254,7 @@ int main() {
 				im = true;
 				bartop.setimmortal(1); 
 				clockim.restart();
-				cout << "sett" << endl;
+				//cout << "sett" << endl;
 				for (int i = 0; i < 8; i++) {
 					bool_immortal[i] = 0;
 				}
@@ -268,7 +268,7 @@ int main() {
 				//cout << totaltimeim << endl;s
 				//cout << totaltime << endl;
 				if (totaltimeim > 10) {
-					cout << "reset" << endl;
+					//cout << "reset" << endl;
 					statusplayer = 2;
 					totaltimeim = 0;
 					im = false;

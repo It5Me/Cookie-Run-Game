@@ -18,12 +18,16 @@ Menu::Menu()
 	this->texture[12].loadFromFile("Texture\\menu\\btn_playerright_normal.png");
 	this->texture[13].loadFromFile("Texture\\menu\\player.png");
 	this->texture[14].loadFromFile("Texture\\menu\\animal.png");
+	this->texture[15].loadFromFile("Texture\\menu\\btn_howtoplay.png");
+	this->texture[16].loadFromFile("Texture\\menu\\btn_howtoplays.png"); /////////////////////////////////////////////////////////
+	this->texture[17].loadFromFile("Texture\\menu\\show.png");
 	this->texture_animal[0].loadFromFile("Texture\\menu\\animal1.png");
 	this->texture_animal[1].loadFromFile("Texture\\menu\\animal2.png");
 	this->texture_animal[2].loadFromFile("Texture\\menu\\animal3.png");
 	this->texture_animal[3].loadFromFile("Texture\\menu\\animal4.png");
 	this->texture_player[0].loadFromFile("Texture\\player\\playerwomanall-01.png");
 	this->texture_player[1].loadFromFile("Texture\\player\\manplayer.png");
+	this->spri_btnhowtoplay.setTexture(this->texture[15]);
 	this->spri_bg.setTexture(this->texture[0]);
 	this->spri_highscore.setTexture(this->texture[1]);
 	this->spri_showname.setTexture(this->texture[2]);
@@ -36,14 +40,14 @@ Menu::Menu()
 	//this->spri_btn_playerleft.setTexture(this->texture[10]);
 	this->spri_btn_playerright.setTexture(this->texture[11]);
 	//this->spri_btn_playerright.setTexture(this->texture[12]);
-
 	this->spri_player.setTexture(this->texture[13]);
 	this->showplayer.setTexture(this->texture_player[0]);
 	this->spri_animal.setTexture(this->texture[14]);
+	this->spri_pagehowtoplay.setTexture(this->texture[17]);
 	this->showanimal.setTexture(this->texture_animal[0]);
 	this->spri_highscore.setPosition(30.0f, 45.0f);
 	this->spri_button.setPosition(1000.0f, 770.0f);
-	this->spri_showname.setPosition(1000.0f, 45.0f);
+	this->spri_showname.setPosition(1080.0f, 45.0f);
 	this->spri_animal.setPosition(773.0f, 167.0f);
 	this->showanimal.setPosition(773.0f, 167.0f);
 	this->showplayer.setPosition(1064.3f, 167.0f);
@@ -52,7 +56,9 @@ Menu::Menu()
 	this->spri_btn_animalright.setPosition(931.0f, 451.0f);
 	this->spri_btn_playerleft.setPosition(1145.0f, 664.0f);
 	this->spri_btn_playerright.setPosition(1334.0f, 664.0f);
+	this->spri_btnhowtoplay.setPosition(730.0f, 790.0f);
 	this->showplayer.setScale(2, 2);
+	this->spri_pagehowtoplay.setPosition(20.0f, 20.0f);
 
 
 	this->font.loadFromFile("font\\SOV_monomon-hinted.ttf");
@@ -78,6 +84,7 @@ void Menu::DRAW(RenderWindow* window)
 	this->colition(window, &spri_btn_animalright, &this->texture[7], &this->texture[8], &this->onhold[2],2);
 	this->colition(window, &spri_btn_playerleft, &this->texture[9], &this->texture[10], &this->onhold[3],3);
 	this->colition(window, &spri_btn_playerright, &this->texture[11], &this->texture[12], &this->onhold[4],4);
+	this->colition(window, &spri_btnhowtoplay, &this->texture[15], &this->texture[16], &this->onhold[5], 5);
 	window->draw(this->spri_bg);
 	window->draw(this->spri_highscore);
 	window->draw(this->spri_showname);
@@ -90,6 +97,8 @@ void Menu::DRAW(RenderWindow* window)
 	window->draw(this->spri_animal);
 	window->draw(this->showanimal);
 	window->draw(this->showplayer);
+	window->draw(this->spri_btnhowtoplay);
+
 	
 
 	for (int i = 0; i < 5; i++) {
@@ -97,6 +106,11 @@ void Menu::DRAW(RenderWindow* window)
 
 	}
 	//cout << "mouse: " << Mouse::getPosition(*window).x << " " << Mouse::getPosition(*window).y << endl;
+
+
+	if (this->howtoplayshow == true) {
+		window->draw(this->spri_pagehowtoplay);
+	}
 }
 
 void Menu::loadfile()
@@ -177,6 +191,8 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 				break;//playerleft
 			case 4:index_player = (index_player < 1 ? index_player + 1 : index_player);
 				break;//playerright
+			case 5:this->howtoplayshow = true;
+				break;
 			}
 			this->showplayer.setTexture(this->texture_player[index_player]);
 			this->showanimal.setTexture(this->texture_animal[index_animal]);
