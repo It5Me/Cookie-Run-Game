@@ -12,17 +12,19 @@ public:
 	void setstart();
 
 private:
+	bool exitgame = false;
 	bool howtoplayshow=false;
 	Texture texture_animal[4];
 	Texture texture_player[2];
 	Sprite  showplayer;
 	Sprite  showanimal;
-	Texture texture[18];
+	Texture texture[20];
 	Sprite spri_bg, spri_showname, spri_highscore,spri_btn_animalleft, spri_btn_animalright, spri_btn_playerleft,
-		spri_btn_playerright,spri_player,spri_animal,spri_btnhowtoplay,spri_btnhowtoplays,spri_pagehowtoplay;
+		spri_btn_playerright,spri_player,spri_animal,spri_btnhowtoplay,spri_btnhowtoplays,spri_pagehowtoplay
+		,spri_exit,spri_exitgame;
 	Sprite spri_button;
 	void colition(RenderWindow* window, Sprite *spri, Texture *nm, Texture *ho,bool *p,int index);
-	bool onhold[6] = { 0,0,0,0,0,0 };
+	bool onhold[8] = { 0,0,0,0,0,0,0,0 };
 	bool click = false;
 	Font font;
 	Text text[5];

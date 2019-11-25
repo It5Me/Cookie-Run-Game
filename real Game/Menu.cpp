@@ -21,12 +21,15 @@ Menu::Menu()
 	this->texture[15].loadFromFile("Texture\\menu\\btn_howtoplay.png");
 	this->texture[16].loadFromFile("Texture\\menu\\btn_howtoplays.png"); /////////////////////////////////////////////////////////
 	this->texture[17].loadFromFile("Texture\\menu\\show.png");
+	this->texture[18].loadFromFile("Texture\\menu\\exit.png");
+	this->texture[19].loadFromFile("Texture\\menu\\exit.png");
 	this->texture_animal[0].loadFromFile("Texture\\menu\\animal1.png");
 	this->texture_animal[1].loadFromFile("Texture\\menu\\animal2.png");
 	this->texture_animal[2].loadFromFile("Texture\\menu\\animal3.png");
 	this->texture_animal[3].loadFromFile("Texture\\menu\\animal4.png");
 	this->texture_player[0].loadFromFile("Texture\\player\\playerwomanall-01.png");
 	this->texture_player[1].loadFromFile("Texture\\player\\manplayer.png");
+	this->spri_exitgame.setTexture(this->texture[19]);
 	this->spri_btnhowtoplay.setTexture(this->texture[15]);
 	this->spri_bg.setTexture(this->texture[0]);
 	this->spri_highscore.setTexture(this->texture[1]);
@@ -44,6 +47,7 @@ Menu::Menu()
 	this->showplayer.setTexture(this->texture_player[0]);
 	this->spri_animal.setTexture(this->texture[14]);
 	this->spri_pagehowtoplay.setTexture(this->texture[17]);
+	this->spri_exit.setTexture(this->texture[18]);
 	this->showanimal.setTexture(this->texture_animal[0]);
 	this->spri_highscore.setPosition(30.0f, 45.0f);
 	this->spri_button.setPosition(1000.0f, 770.0f);
@@ -59,6 +63,7 @@ Menu::Menu()
 	this->spri_btnhowtoplay.setPosition(730.0f, 790.0f);
 	this->showplayer.setScale(2, 2);
 	this->spri_pagehowtoplay.setPosition(20.0f, 20.0f);
+	this->spri_exitgame.setPosition(1515.0f, 800.0f);
 
 
 	this->font.loadFromFile("font\\SOV_monomon-hinted.ttf");
@@ -85,6 +90,10 @@ void Menu::DRAW(RenderWindow* window)
 	this->colition(window, &spri_btn_playerleft, &this->texture[9], &this->texture[10], &this->onhold[3],3);
 	this->colition(window, &spri_btn_playerright, &this->texture[11], &this->texture[12], &this->onhold[4],4);
 	this->colition(window, &spri_btnhowtoplay, &this->texture[15], &this->texture[16], &this->onhold[5], 5);
+	this->colition(window, &spri_exit, &this->texture[18], &this->texture[18], &this->onhold[6], 6);
+	this->colition(window, &spri_exitgame, &this->texture[19], &this->texture[19], &this->onhold[7], 7);
+	///////////cout << this->onhold[7] << endl;
+////////////////////////	cout << exitgame << endl;
 	window->draw(this->spri_bg);
 	window->draw(this->spri_highscore);
 	window->draw(this->spri_showname);
@@ -98,6 +107,8 @@ void Menu::DRAW(RenderWindow* window)
 	window->draw(this->showanimal);
 	window->draw(this->showplayer);
 	window->draw(this->spri_btnhowtoplay);
+	window->draw(this->spri_exitgame);
+
 
 	
 
@@ -110,6 +121,16 @@ void Menu::DRAW(RenderWindow* window)
 
 	if (this->howtoplayshow == true) {
 		window->draw(this->spri_pagehowtoplay);
+		this->spri_exit.setPosition(1470.0f, 39.0f);
+		window->draw(this->spri_exit);
+
+	}
+	else{
+		this->howtoplayshow = false;
+
+	}
+	if (this->exitgame == true) {
+		cout << "GGGGG "<< endl;
 	}
 }
 
@@ -170,6 +191,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 		Mouse::getPosition(*window).y >= spri->getPosition().y &&
 		Mouse::getPosition(*window).x <= spri->getPosition().x + ho->getSize().x &&
 		Mouse::getPosition(*window).y <= spri->getPosition().y + ho->getSize().y) {
+		cout << index << endl;
 		//cout << "Check!" << endl;
 		if (*p == false) {
 			*p = true;
@@ -178,7 +200,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 		}
 		if (Mouse::isButtonPressed(Mouse::Left) == true && this->click == false) {
 			this->click = true;
-			//cout << "click" << endl;
+			cout << "click" << endl;
 			switch (index)
 			{
 			case 0:this->start = true;
@@ -192,6 +214,11 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 			case 4:index_player = (index_player < 1 ? index_player + 1 : index_player);
 				break;//playerright
 			case 5:this->howtoplayshow = true;
+				break;
+			case 6:this->howtoplayshow = false;
+				break;
+			case 7:this->exitgame = true;
+				cout << "sSSSlfks" << endl;
 				break;
 			}
 			this->showplayer.setTexture(this->texture_player[index_player]);
@@ -210,7 +237,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 		}
 		else if (Mouse::isButtonPressed(Mouse::Left) == false && this->click == true) {
 			this->click = false;
-			//cout << "NO click" << endl;
+			cout << "NO click" << endl;
 		}
 	}
 	else if(*p==true){

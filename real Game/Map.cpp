@@ -195,7 +195,7 @@ void MAP::DRAW(RenderWindow* window)
 					//this->obstacleList.erase(this->obstacleList.begin() + i);
 				}
 				this->obstacleList.clear();
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 14; i++) {
 				//	cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap3[i] - 1], positionobmap3[i], typeobmap3[i]));
 				}
@@ -218,7 +218,7 @@ void MAP::DRAW(RenderWindow* window)
 			}
 			if (int(fabs(this->spri_floorice.getPosition().x)) + 1600 == 12200)
 			{
-				this->addBear(3); // <---- Call function 
+				this->addBear(3);   
 
 				this->indexhole = 0;
 				//cout << "LOADMAP" << endl;
@@ -232,7 +232,7 @@ void MAP::DRAW(RenderWindow* window)
 					//this->obstacleList.erase(this->obstacleList.begin() + i);
 				}
 				this->obstacleList.clear();
-				for (int i = 0; i < 10; i++) {
+				for (int i = 0; i < 13; i++) {
 					//cout << "SET" << endl;
 					obstacleList.push_back(new Obstacle(objecttexture[indexobmap4[i] - 1], positionobmap4[i], typeobmap4[i]));
 				}
