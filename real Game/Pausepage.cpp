@@ -19,11 +19,13 @@ void Pausepage::draw(RenderWindow* window)
 		&& Mouse::getPosition(*window).y >= 400 && Mouse::getPosition(*window).y <= 400 + this->texture_forward.getSize().y) {
 		if (Mouse::isButtonPressed(Mouse::Left)&& *this->pausestate==true) {
 			*this->pausestate = false;
+			this->sound->playclick();
 		}
 	}
 	if (Mouse::getPosition(*window).x >= 820 && Mouse::getPosition(*window).x <= 820 + this->texture_forward.getSize().x
 		&& Mouse::getPosition(*window).y >= 400 && Mouse::getPosition(*window).y <= 400 + this->texture_forward.getSize().y) {
 		if (Mouse::isButtonPressed(Mouse::Left) && this->clickforward == false) {
+			this->sound->playclick();
 			this->clickforward = true;
 			//cout<<
 		}

@@ -130,7 +130,8 @@ void Menu::DRAW(RenderWindow* window)
 
 	}
 	if (this->exitgame == true) {
-		cout << "GGGGG "<< endl;
+		//cout << "GGGGG "<< endl;
+		window->close();
 	}
 }
 
@@ -199,6 +200,7 @@ void Menu::colition(RenderWindow* window,Sprite *spri,Texture *nm,Texture *ho, b
 			//cout << "on hold" << endl;
 		}
 		if (Mouse::isButtonPressed(Mouse::Left) == true && this->click == false) {
+			this->sound->playclick();
 			this->click = true;
 			cout << "click" << endl;
 			switch (index)

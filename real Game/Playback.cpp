@@ -2,6 +2,8 @@
 
 Playback::Playback()
 {
+	
+	this->click.loadFromFile("sound/click.wav");
 	this->coin_e.loadFromFile("sound/coin.wav");
 	this->_music.openFromFile("sound\\Battle1.ogg");
 	this->_music.setVolume(50);
@@ -11,6 +13,8 @@ Playback::Playback()
 	this->_Effect.setBuffer(this->_effect);
 	this->Coin_s.setBuffer(this->coin_e);
 	this->Coin_s.setVolume(30);
+	this->click_s.setBuffer(this->click);
+	this->click_s.setVolume(40);
 }
 
 void Playback::playEffect()
@@ -21,4 +25,9 @@ void Playback::playEffect()
 void Playback::playcoin()
 {
 	this->Coin_s.play();
+}
+
+void Playback::playclick()
+{
+	this->click_s.play();
 }

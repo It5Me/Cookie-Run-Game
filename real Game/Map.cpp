@@ -209,8 +209,8 @@ void MAP::DRAW(RenderWindow* window)
 		if (this->spri_floorice.getPosition().x > 0) {
 			window->draw(spri_mapice);
 			window->draw(spri_mapfire);
-			window->draw(spri_floorice);
 			window->draw(spri_floorfire);
+			window->draw(spri_floorice);
 		}
 		else {
 			if (int(fabs(this->spri_floorice.getPosition().x)) + 1600 == 12200 - 800) {
@@ -306,6 +306,7 @@ void MAP::DRAW(RenderWindow* window)
 		if (fabs((*positionplayer).x - this->itemlist[i]->getposition().x) < (this->itemlist[i]->gethalfsize().x * 0.3 + 121 * 0.3) *this->val_effect&&
 			fabs((*positionplayer).y - this->itemlist[i]->getposition().y) < (this->itemlist[i]->gethalfsize().y * 0.6 + 121 * 0.6) * this->val_effect) {
 			this->itemlist[i]->hide();
+			this->sound->playcoin();
 			*main_score += this->itemlist[i]->getscore();
 
 			switch (this->itemlist[i]->gettype()) // ตรวจสอบการชน
@@ -360,6 +361,9 @@ void MAP::DRAW(RenderWindow* window)
 
 	//window->draw(this->hole);
 	checkJKL();
+	if (!(*this->gamepause)) {
+		Heart.move();
+	}
 	Heart.draw(window);
 	window->draw(this->spri_box);
 	if (this->bool_j == false) {
@@ -712,7 +716,7 @@ void MAP::addBear(int indexMap)
 			
 			if (type1[i] != -1) {
 				if(randbear==0 || this->beareffect==true) this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 300, 4, itemposition1[i], type1[i]));
-				else if(i%2==0) 
+				else if(i % 20==0) 
 				{
 					if(tempim != -1)
 					this->itemlist.push_back(new Items(this->immortal[tempim], rand() % 200 + 200, 1, itemposition1[i], tempim));
@@ -722,21 +726,21 @@ void MAP::addBear(int indexMap)
 				else
 				switch (type1[i])
 				{
-				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
+				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 120, 4, itemposition1[i], type1[i]));
 					break;													/// กำหนดช่วงคะแนนของแต่ละหมีด้วย
 				case 11: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
 					break;
-				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
+				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 130, 4, itemposition1[i], type1[i]));
 					break;
-				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
+				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 150, 4, itemposition1[i], type1[i]));
 					break;
-				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
+				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 120, 4, itemposition1[i], type1[i]));
 					break;
 				case 15: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
 					break;
-				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
+				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 130, 4, itemposition1[i], type1[i]));
 					break;
-				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 100, 4, itemposition1[i], type1[i]));
+				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 150, 4, itemposition1[i], type1[i]));
 					break;
 				
 				}
@@ -758,21 +762,21 @@ void MAP::addBear(int indexMap)
 				else
 				switch (type2[i])
 				{
-				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
+				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 120, 4, itemposition2[i], type2[i]));
 					break;													/// กำหนดช่วงคะแนนของแต่ละหมีด้วย
 				case 11: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
 					break;
-				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
+				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 130, 4, itemposition2[i], type2[i]));
 					break;
-				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
+				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 150, 4, itemposition2[i], type2[i]));
 					break;
-				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
+				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 120, 4, itemposition2[i], type2[i]));
 					break;
 				case 15: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
 					break;
-				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
+				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 130, 4, itemposition2[i], type2[i]));
 					break;
-				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 100, 4, itemposition2[i], type2[i]));
+				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 150, 4, itemposition2[i], type2[i]));
 					break;
 				}
 
@@ -793,23 +797,22 @@ void MAP::addBear(int indexMap)
 				else
 				switch (type3[i])
 				{
-				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
-					break;													 // score
+				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 120, 4, itemposition3[i], type3[i]));
+					break;													/// กำหนดช่วงคะแนนของแต่ละหมีด้วย
 				case 11: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
 					break;
-				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
+				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 130, 4, itemposition3[i], type3[i]));
 					break;
-				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
+				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 150, 4, itemposition3[i], type3[i]));
 					break;
-				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
+				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 120, 4, itemposition3[i], type3[i]));
 					break;
 				case 15: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
 					break;
-				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
+				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 130, 4, itemposition3[i], type3[i]));
 					break;
-				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 100, 4, itemposition3[i], type3[i]));
+				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 150, 4, itemposition3[i], type3[i]));
 					break;
-
 				}
 
 			}
@@ -829,21 +832,21 @@ void MAP::addBear(int indexMap)
 				else
 				switch (type4[i])
 				{
-				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
-					break;													/// score
+				case 10: this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 120, 4, itemposition4[i], type4[i]));
+					break;												
 				case 11: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
 					break;
-				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
+				case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 130, 4, itemposition4[i], type4[i]));
 					break;
-				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
+				case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 150, 4, itemposition4[i], type4[i]));
 					break;
-				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
+				case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 120, 4, itemposition4[i], type4[i]));
 					break;
 				case 15: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
 					break;
-				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
+				case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 130, 4, itemposition4[i], type4[i]));
 					break;
-				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 100, 4, itemposition4[i], type4[i]));
+				case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 150, 4, itemposition4[i], type4[i]));
 					break;
 				}
 
@@ -864,6 +867,7 @@ void MAP::checkcolisionheart()
 		//cout << "CHONNN" << endl;
 		this->Heart.setposition(Vector2f(-500, 0));
 		*this->hpplayer += 20;
+		this->sound->playcoin();
 	}
 }
 
@@ -883,7 +887,7 @@ void MAP::setpositionmapall()
 
 		if (type1[i] != -1) {
 			if (randbear == 0 || this->beareffect == true) this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 300, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
-			else if (i % 2 == 0)
+			else if (i % 20 == 0)
 			{
 				if (tempim != -1)
 					this->itemlist.push_back(new Items(this->immortal[tempim], rand() % 200 + 200, 1, itemposition1[i] - Vector2f(1600, 0), tempim));
@@ -893,24 +897,24 @@ void MAP::setpositionmapall()
 			else
 			switch (type1[i])
 			{
-			case 10 : this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 200, 4, itemposition1[i]-Vector2f(1600,0), type1[i]));
+			case 10 : this->itemlist.push_back(new Items(this->bear[0], rand() % 200 + 120, 4, itemposition1[i]-Vector2f(1600,0), type1[i]));
 				break;													/// กำหนดช่วงคะแนนของแต่ละหมี
-			case 11: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+			case 11: this->itemlist.push_back(new Items(this->bear[1], rand() % 200 + 100, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
 				break;
-			case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+			case 12: this->itemlist.push_back(new Items(this->bear[2], rand() % 200 + 130, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
 				break;
-			case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+			case 13: this->itemlist.push_back(new Items(this->bear[3], rand() % 200 + 150, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
 				break;
-			case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+			case 14: this->itemlist.push_back(new Items(this->bear[4], rand() % 200 + 120, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
 				break;
-			case 15: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+			case 15: this->itemlist.push_back(new Items(this->bear[5], rand() % 200 + 100, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
 				break;
-			case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+			case 16: this->itemlist.push_back(new Items(this->bear[6], rand() % 200 + 1300, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
 				break;
-			case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+			case 17: this->itemlist.push_back(new Items(this->bear[7], rand() % 200 + 1500, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
 				break;
-			case 18: this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
-				break;
+			//case 18: this->itemlist.push_back(new Items(this->bear[8], rand() % 200 + 200, 4, itemposition1[i] - Vector2f(1600, 0), type1[i]));
+				//break;
 			}
 			
 		}

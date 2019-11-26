@@ -1,4 +1,7 @@
-#pragma once
+#ifndef abc
+#define abc
+#include"Playback.h"
+#endif // abc
 #include"AllInOne.h"
 class Pausepage
 {
@@ -8,7 +11,7 @@ public:
 	void setpointer(bool *state);
 	bool checkclickforward();
 	void reset();
-
+	Playback* sound;
 private:
 	bool clickforward = false;
 	bool *pausestate;

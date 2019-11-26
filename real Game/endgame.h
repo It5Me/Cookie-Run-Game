@@ -1,3 +1,7 @@
+#ifndef abc
+#define abc
+#include"Playback.h"
+#endif // abc
 #include"AllInOne.h"
 #include<algorithm>
 #include<vector>
@@ -12,6 +16,7 @@ public:
 	bool getstatus();
 	bool ismenustart();
 	void setpointscore(unsigned long* t);
+	Playback* sound;
 private:
 	vector<pair<int, string> > scorea;
 	fstream myFile;

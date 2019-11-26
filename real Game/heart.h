@@ -3,13 +3,14 @@
 class heart
 {
 public:
+
 	heart();
 	void draw(RenderWindow* window);
 	void setposition(Vector2f pos);
 	bool getstatus();
 	Vector2f gethalfsize();
 	Vector2f getposition();
-
+	void move();
 private:
 	Texture object;
 	Sprite body;

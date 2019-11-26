@@ -15,7 +15,7 @@ void heart::draw(RenderWindow* window)
 	}
 	if (this->visible == true) {
 		window->draw(this->body);
-		this->body.move(-8.0f, 0.0f);
+		
 	}
 }
 
@@ -43,4 +43,9 @@ Vector2f heart::gethalfsize()
 Vector2f heart::getposition()
 {
 	return this->body.getPosition();
+}
+
+void heart::move()
+{
+	this->body.move(-8.0f, 0.0f);
 }

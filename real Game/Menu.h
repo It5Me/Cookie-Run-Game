@@ -1,3 +1,8 @@
+#ifndef abc
+#define abc
+#include"Playback.h"
+#endif // abc
+
 #include"AllInOne.h"
 #include<fstream>
 class Menu
@@ -11,6 +16,7 @@ public:
 	int select_animal();
 	void setstart();
 
+	Playback* sound;
 private:
 	bool exitgame = false;
 	bool howtoplayshow=false;

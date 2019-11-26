@@ -1,4 +1,7 @@
-
+#ifndef abc
+#define abc
+#include"Playback.h"
+#endif // abc
 #include"Obstacle.h"
 #include"AllInOne.h"
 #include"heart.h"
@@ -6,6 +9,7 @@
 
 #include<stdlib.h>
 #include<time.h>
+
 
 
 class MAP
@@ -25,8 +29,9 @@ public:
 	void setpointerpositionplayer(Vector2f* pos);
 	unsigned long* main_score;
 	void setpointerim(bool*im);
+	Playback* sound;
 private:
-
+	
 	bool* im;
 	int calcIM();
 

@@ -1,5 +1,9 @@
-﻿#include"AllInOne.h"
+﻿#ifndef abc
+#define abc
 #include"Playback.h"
+#endif // abc
+#include"AllInOne.h"
+//#include"Playback.h"
 #include"Map.h"
 #include"Player.h"
 #include"Menu.h"
@@ -43,6 +47,7 @@ int main() {
 	Pausepage pausepage;
 	pausepage.setpointer(&gamepause);
 	Playback sound;
+	pausepage.sound = &sound;
 	Pet pet;
 	Event event;
 	int indexMap = 0;
@@ -50,6 +55,7 @@ int main() {
 	int statusplayer = 1;
 	MAP map(&indexMap, bool_immortal);
 	
+	map.sound = &sound;
 	map.setpointergamepause(&gamepause);
 	Player player1;
 	bool im=0;
@@ -62,7 +68,7 @@ int main() {
 	map.setpointerstatusplayer(&statusplayer);
 	map.setpointerhp(&HP);
 	endgame END(&event);
-	
+	END.sound = &sound;
 	Bartop bartop;
 	//bartop.setimmortal(1);
 	//float posy; // player.position.y
@@ -79,6 +85,7 @@ int main() {
 	bool bool_big = false;
 	bartop.pair(bool_immortal);
 	Menu menu;	
+	menu.sound = &sound;
 	unsigned long main_score=0; // ************score********
 	map.main_score = &main_score;
 	int tempcolision = 0;
@@ -155,9 +162,9 @@ int main() {
 			bartop.drawscore(&main_score);
 			totalrunaway += clock_runaway.restart().asSeconds();
 			
-			if (totalrunaway > 0.01 && END.getstatus()==false&&gamepause==false) {
+			if (totalrunaway > 0.01 && END.getstatus()==false&&gamepause==false&&im==false) {
 				totalrunaway = 0;
-				HP -= 0.01;     ///////////////// เลือดลด
+				HP -= 0.04;     ///////////////// เลือดลด
 				main_score++;                  //////////// score + alltime
 				//cout << main_score << endl;
 			}
